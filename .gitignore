@@ -5,3 +5,6 @@ pihole/etc-dnsmasq.d/*
 !pihole/etc-dnsmasq.d/dummy
 pihole/etc-pihole/*
 !pihole/etc-pihole/dummy
+
+octoprint/config/*
+!octoprint/config/dummy
