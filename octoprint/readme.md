@@ -26,5 +26,5 @@
 
 | Version | Date | Size | Log |
 |-------|-------------|-------|------------------------------|
-| 0.6.0 |  8 Mar 2020 | | Updated to Py3 and `docker-compose` |
+| 0.7.0 |  8 Mar 2020 | 262MB | Updated to Py3 and `docker-compose` |
 | 0.5.0 | 15 Sep 2019 | 224MB | Finally set up how I like it |
