@@ -1,0 +1,7 @@
+.env
+.DS_Store
+._*
+pihole/etc-dnsmasq.d/*
+!pihole/etc-dnsmasq.d/dummy
+pihole/etc-pihole/*
+!pihole/etc-pihole/dummy
