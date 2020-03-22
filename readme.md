@@ -1,9 +1,11 @@
 ![](https://static0.srcdn.com/wordpress/wp-content/uploads/Ultron-Marvel-Comics-Annihilation-Conquest-5.jpg?q=50&fit=crop&w=740&h=389)
 
+![GitHub](https://img.shields.io/github/license/walchko/ultron)
+
 I am grouping some of my docker containers together:
 
-- Pi Hole
-- Octoprint
+- Pi Hole 
+- Octoprint ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/walchko/octoprint)
 
 ## Simple Instructions
 
