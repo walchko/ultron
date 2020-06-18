@@ -1,7 +1,7 @@
 ![](https://octoprint.org/assets/img/logo.png)
 
 # Docker OctoPrint
-
+[![https://hub.docker.com/repository/docker/walchko/octoprint](http://dockeri.co/image/walchko/octoprint/)](https://registry.hub.docker.com/u/walchko/octoprint/)
 
 ## MK3S
 
