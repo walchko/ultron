@@ -24,6 +24,7 @@ For Ubuntu systems, summary of steps:
     DNS_1=127.0.0.1
     DNS_2=1.2.3.4
     ```
+- Run `docker-compose pull` to get latest image
 - Run `docker-compose up -d` to get things going
     - `-d` will detach it from the terminal, you can omit and use `ctrl-c` to shut it down
 - To terminate, use: `docker-compose down`
