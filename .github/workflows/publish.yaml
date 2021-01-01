@@ -10,7 +10,7 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
       - name: Push to GitHub Packages
-        uses: docker/build-push-action@v1
+        uses: docker/build-push-action@v2
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
@@ -18,6 +18,7 @@ jobs:
           #repository: ghcr.io
           registry: docker.pkg.github.com
           #repository: walchko/ultron/octoprint
-          tag_with_ref: true
+          #tag_with_ref: true
           path: ./octoprint/
-          image-name: octoprint
+          #image-name: octoprint
+          tags: user/app:latest
