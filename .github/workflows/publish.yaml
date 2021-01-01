@@ -20,3 +20,4 @@ jobs:
           #repository: walchko/ultron/octoprint
           tag_with_ref: true
           path: ./octoprint/
+          image-name: octoprint
