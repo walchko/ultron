@@ -19,6 +19,8 @@ jobs:
           registry: docker.pkg.github.com
           #repository: walchko/ultron/octoprint
           #tag_with_ref: true
-          path: ./octoprint/
+          #path: ./octoprint/
           #image-name: octoprint
+          context: .
+          file: ./octoprint/Dockerfile
           tags: user/app:latest
