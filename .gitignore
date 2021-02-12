@@ -8,3 +8,8 @@ pihole/etc-pihole/*
 
 octoprint/config/*
 !octoprint/config/dummy
+
+**/etc-dnsmasq.d/*
+!**/etc-dnsmasq.d/dummy
+**/etc-pihole/*
+!**/etc-pihole/dummy
