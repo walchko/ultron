@@ -4,8 +4,8 @@
 
 I am grouping some of my docker containers together:
 
-- Pi Hole 
-- Octoprint ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/walchko/octoprint)
+- Pi Hole ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/pihole/pihole)
+- Octoprint ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/octoprint/octoprint)
 
 ## Simple Instructions
 
