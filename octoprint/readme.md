@@ -1,6 +1,9 @@
 ![](https://octoprint.org/assets/img/logo.png)
 
 # Docker OctoPrint
+
+![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/octoprint/octoprint)
+
 [![https://hub.docker.com/repository/docker/octoprint/octoprint](http://dockeri.co/image/octoprint/octoprint/)](https://registry.hub.docker.com/r/octoprint/octoprint/)
 
 ## MK3S
