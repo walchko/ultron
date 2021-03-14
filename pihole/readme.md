@@ -2,6 +2,8 @@
 
 # PiHole
 
+![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/pihole/pihole)
+
 # Setup
 
 ## Ubuntu Fixes
