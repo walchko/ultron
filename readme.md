@@ -7,7 +7,16 @@ I am grouping some of my docker containers together:
 - Pi Hole ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/pihole/pihole)
 - Octoprint ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/octoprint/octoprint)
 
-## Simple Instructions
+## Instructions for Using Existing Images from DockerHub
+
+- Run `docker-compose` pull to get latest image
+- Run `docker-compose up -d` to get things going
+    - `-d` will detach it from the terminal, you can omit and use `ctrl-c` to shut it down
+- Terminate with `docker-compose down`
+- You **must** be in this sub folder with the `docker-compose.yaml` to run `up` and `down` commands
+
+
+## Instructions for Building Images
 
 1. `cd` into folder
 1. `docker-compose build --compress --force-rm --no-cache --pull --parallel`
