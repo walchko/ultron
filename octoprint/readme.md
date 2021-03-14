@@ -1,7 +1,7 @@
 ![](https://octoprint.org/assets/img/logo.png)
 
 # Docker OctoPrint
-[![https://hub.docker.com/repository/docker/walchko/octoprint](http://dockeri.co/image/walchko/octoprint/)](https://registry.hub.docker.com/u/walchko/octoprint/)
+[![https://hub.docker.com/repository/docker/octoprint/octoprint](http://dockeri.co/image/octoprint/octoprint/)](https://registry.hub.docker.com/u/octoprint/octoprint/)
 
 ## MK3S
 
@@ -21,10 +21,3 @@
 
 - [ref](https://docs.juliaebert.com/3d-printing/octoprint)
 - [ref](https://community.octoprint.org/t/known-printer-profiles-for-octoprint/3032/30)
-
-# Change Log
-
-| Version | Date | Size | Log |
-|-------|-------------|-------|------------------------------|
-| 0.7.0 |  8 Mar 2020 | 262MB | Updated to Py3 and `docker-compose` |
-| 0.5.0 | 15 Sep 2019 | 224MB | Finally set up how I like it |

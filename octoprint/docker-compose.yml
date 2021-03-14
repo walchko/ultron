@@ -1,13 +1,41 @@
----
 version: '3'
+
 services:
   octoprint:
-    build: .
-    image: walchko/octoprint:0.7
-    container_name: octoprint
+    image: octoprint/octoprint
+    # container_name: octoprint
+    restart: unless-stopped
     ports:
       - 5000:5000
     devices:
       - /dev/ttyACM0:/dev/ttyACM0
+    #  - /dev/video0:/dev/video0
     volumes:
-      - ./config:/home/octoprint/.octoprint
+      - ./config:/octoprint
+    # - octoprint:/octoprint
+    # uncomment the lines below to ensure camera streaming is enabled when
+    # you add a video device
+    #environment:
+    #  - ENABLE_MJPG_STREAMER=true
+
+  ####
+  # uncomment if you wish to edit the configuration files of octoprint
+  # refer to docs on configuration editing for more information
+  ####
+
+  #config-editor:
+  #  image: linuxserver/code-server
+  #  ports:
+  #    - 8443:8443
+  #  depends_on:
+  #    - octoprint
+  #  restart: unless-stopped
+  #  environment:
+  #    - PUID=0
+  #    - GUID=0
+  #    - TZ=America/Chicago
+  #  volumes:
+  #    - octoprint:/octoprint
+
+# volumes:
+#   octoprint:
