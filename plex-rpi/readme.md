@@ -4,6 +4,8 @@
 
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/linuxserver/plex)
 
+Docker runs great on a Raspberry Pi 3 and better on a 4.
+
 ## Setup
 
 - Install `docker`
