@@ -8,7 +8,11 @@
 
 - Install `docker`
 - Setup `python3` and `docker-compose` in a virtual environment
+    - `sudo apt install python3-venv`
+    - `python3 -m venv ~/venv`
+    - `source ~/venv/bin/activate`
     - `pip install -U pip setuptools wheel docker-compose`
+    - Add `. ~/venv/bin/activate` to `.bashrc`
 - Create `docker-compose.yml`
 
 ## Run and Stop
