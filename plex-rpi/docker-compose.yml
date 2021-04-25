@@ -11,6 +11,6 @@ services:
       - VERSION=docker
       - PLEX_CLAIM= #optional
     volumes:
-      - /home/pi/plex/library:/config
-      - /home/pi/media:/movies
+      - ./library:/config
+      - /mnt/usbdrive:/media
     restart: unless-stopped
