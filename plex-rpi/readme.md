@@ -17,6 +17,11 @@ Docker runs great on a Raspberry Pi 3 and better on a 4.
     - Add `. ~/venv/bin/activate` to `.bashrc`
 - Create `docker-compose.yml`
 
+### Errors
+
+- Errors about `permission`: `sudo chmod 777 /var/run/docker.sock`
+- Make sure to add to group: `sudo usermod -aG docker pi`
+
 ## Run and Stop
 
 - Update: `docker-compose pull`
