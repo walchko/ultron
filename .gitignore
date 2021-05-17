@@ -15,5 +15,6 @@ octoprint/config/*
 !**/etc-pihole/dummy
 
 plex-rpi/library/
+plex-desktop/library/
 
 old
