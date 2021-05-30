@@ -9,4 +9,7 @@ services:
     ports:
       - "8888:8888/tcp"
     hostname: jupyter-server
+    volumes:
+      - '/home/kevin/github:/home/kevin/github'
+      - '/home/kevin/tmp:/home/kevin/tmp'
     restart: unless-stopped
