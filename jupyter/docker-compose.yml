@@ -1,0 +1,12 @@
+---
+version: '3'
+
+services:
+  jupyter-server:
+    build: .
+    image: walchko/jupyter-server:0.1
+    container_name: jupyter-server
+    ports:
+      - "8888:8888/tcp"
+    hostname: jupyter-server
+    restart: unless-stopped
