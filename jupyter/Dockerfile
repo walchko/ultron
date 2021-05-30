@@ -1,6 +1,7 @@
 #
 # FROM debian:stretch
-FROM python:3.9-buster
+# FROM python:3.9-buster
+FROM ubuntu:20.04
 
 # Not essential, but wise to set the lang
 # Note: Users with other languages should set this in their derivative image
@@ -20,6 +21,7 @@ RUN apt-get update -qq \
         libcurl4-openssl-dev \
         libffi-dev \
         libsqlite3-dev \
+        python3 \
         python3-dev \
         python3-pip \
         python3-venv \
