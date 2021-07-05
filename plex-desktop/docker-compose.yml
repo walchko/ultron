@@ -13,5 +13,5 @@ services:
       # - PLEX_CLAIM= #optional
     volumes:
       - ./library:/config
-      - /media/kevin/Movies:/media
+      - /mnt/usbdrive:/media
     restart: unless-stopped

@@ -2,14 +2,20 @@
 version: '3'
 
 services:
-  jupyter-server:
+  jupyter:
     build: .
-    image: walchko/jupyter-server:0.1
-    container_name: jupyter-server
+    image: walchko/jupyter:0.1
+    container_name: jupyter
     ports:
-      - "8888:8888/tcp"
-    hostname: jupyter-server
+      - "28888:8888/tcp"
+    hostname: jupyter
     volumes:
-      - '/home/kevin/github:/home/kevin/github'
-      - '/home/kevin/tmp:/home/kevin/tmp'
+      # - '/home/kevin/github/bearsnacks:/home/jupuser/github'
+      # - '/home/kevin/tmp:/home/jupuser/tmp'
+      #- './home:/home/jupuser'
+      - ./files:/files
     restart: unless-stopped
+    #entrypoint: /bin/bash
+    stdin_open: true
+    environment:
+      TZ: 'America/Chicago'
