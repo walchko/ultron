@@ -3,8 +3,8 @@ version: "3"
 
 # More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
 services:
-  pihole-docker:
-    container_name: pihole-docker
+  pihole-docker2:
+    container_name: pihole-docker2
     image: pihole/pihole:latest
     ports:
       - "53:53/tcp"
@@ -12,11 +12,11 @@ services:
       # - "67:67/udp"  # dhcp
       - "80:80/tcp"
       - "443:443/tcp"
-    hostname: pihole-docker
+    hostname: pihole-docker2
     environment:
       TZ: 'America/Chicago'
-      VIRTUAL_HOST: pihole-docker.local
-      ServerIP: ${HOST_IP}
+      VIRTUAL_HOST: pihole-docker2.local
+      # ServerIP: ${HOST_IP}
       WEBPASSWORD: ${PASSWORD}
       WEBTHEME: "default-dark"
       TEMPERATUREUNIT: "f"
@@ -24,9 +24,9 @@ services:
     volumes:
       - './etc-pihole/:/etc/pihole/'
       - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
-    dns:
-      - ${DNS_1}
-      - ${DNS_2}
+    # dns:
+    #   - ${DNS_1}
+    #   - ${DNS_2}
     # Recommended but not required (DHCP needs NET_ADMIN)
     #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
     cap_add:
