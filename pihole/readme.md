@@ -32,6 +32,23 @@ For Ubuntu systems, summary of steps:
 - To terminate, use: `docker-compose down`
 - You must be in this sub folder with the yaml to run `up` and `down` commands
 
+## Apple Mail Fixes
+
+Recent versions of Pi-hole automatically sink hole requests to two key Apple domains (mask.icloud.com and mask-h2.icloud.com) to prevent the Apple Private Relay feature from bypassing Pi-hole. Due to this, the "Protect Mail Activity" feature in iOS 15 may not work when connected to a network using a Pi-hole server.
+
+In iOS, the "Protect Mail Activity" feature is found under Settings → Mail → Privacy Protection. In macOS, it's found under Mail → Preferences → Privacy.
+
+To resolve this, add the BLOCK_ICLOUD_PR=false setting to your Pi-hole server's pihole-FTL.conf file using the following steps:
+
+1. SSH to your Pi-hole server
+2. Run the following command: `sudo nano /etc/pihole/pihole-FTL.conf`
+3. Append the following setting to this file and save the file: `BLOCK_ICLOUD_PR=false`
+4. Either restart your Pi-hole server, or just restart the DNS Resolver service with `pihole restartdns`
+
+Pi-hole documentation: [BLOCK_ICLOUD_PR=true|false (PR #1171)](https://apple.stackexchange.com/questions/429899/why-am-i-seeing-your-network-settings-prevent-content-from-loading-privately-i/429900#:~:text=BLOCK_ICLOUD_PR%3Dtrue%7Cfalse%20(PR%20%231171))
+
+stackexchange: [Ref](https://apple.stackexchange.com/questions/429899/why-am-i-seeing-your-network-settings-prevent-content-from-loading-privately-i/429900#429900)
+
 # Change Log
 
 | Version | Date | Log |
