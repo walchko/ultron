@@ -1,0 +1,25 @@
+---
+version: "3"
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    # network_mode: host
+    # networks:
+    #     - localnet
+    restart: unless-stopped
+    hostname: mqtt
+    container_name: mqtt
+    ports:
+      - 1883:1883
+      - 8883:8883
+      - 9001:9001
+    volumes:
+      - ./config:/mosquitto/config:ro
+      - ./data:/mosquitto/data
+      - ./log:/mosquitto/log
+    # environment:
+    #     PUID: 1000
+    #     PGID: 1000
+# networks:
+#     localnet:
