@@ -35,7 +35,11 @@ volumes:
   - ./config:/mosquitto/config:ro
 ```
 
-However, this does not fix the `log` folder.
+However, this does not fix the `log` folder. To read the log files, use:
+
+```
+sudo chown -R kevin:kevin .
+```
 
 ## Debug
 
