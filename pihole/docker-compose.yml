@@ -3,8 +3,8 @@ version: "3"
 
 # More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
 services:
-  pihole-docker2:
-    container_name: pihole-docker2
+  pihole-docker:
+    container_name: pihole-docker
     image: pihole/pihole:latest
     ports:
       - "53:53/tcp"
@@ -12,10 +12,10 @@ services:
       # - "67:67/udp"  # dhcp
       - "80:80/tcp"
       - "443:443/tcp"
-    hostname: pihole-docker2
+    hostname: pihole-docker
     environment:
       TZ: 'America/Chicago'
-      VIRTUAL_HOST: pihole-docker2.local
+      VIRTUAL_HOST: pihole-docker.local
       # ServerIP: ${HOST_IP}
       WEBPASSWORD: ${PASSWORD}
       WEBTHEME: "default-dark"
