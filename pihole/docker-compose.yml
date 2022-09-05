@@ -6,6 +6,7 @@ services:
   pihole-docker:
     container_name: pihole-docker
     image: pihole/pihole:latest
+    #cgroupVersion: v1
     ports:
       - "53:53/tcp"
       - "53:53/udp"
@@ -20,6 +21,7 @@ services:
       WEBPASSWORD: ${PASSWORD}
       WEBTHEME: "default-dark"
       TEMPERATUREUNIT: "f"
+      #DOCKER_OPTS: native.cgroupdriver=cgroupfs
     # Volumes store your data between container upgrades
     volumes:
       - './etc-pihole/:/etc/pihole/'
