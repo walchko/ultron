@@ -17,4 +17,9 @@ octoprint/config/*
 plex-rpi/library/
 plex-desktop/library/
 
+nextcloud/certs
+nextcloud/config
+nextcloud/data
+nextcloud/mariadb
+
 old

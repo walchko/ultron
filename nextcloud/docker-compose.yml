@@ -1,0 +1,47 @@
+---
+version: "3"
+services:
+  nextcloud:
+    image: lscr.io/linuxserver/nextcloud:latest
+    container_name: nextcloud
+    depends_on:
+      - db
+    networks:
+      - nextcloud_network
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - ./config:/config
+      - ./data:/data
+    ports:
+      - 8443:443
+      - 8080:80
+    restart: unless-stopped
+
+  db:
+    image: linuxserver/mariadb:latest
+    container_name: nextcloud-mariadb
+    networks:
+      - nextcloud_network
+    volumes:
+      - ./mariadb/config:/config # Contains the db itself and all assorted settings.
+      #- db:/var/lib/mysql
+      #- /etc/localtime:/etc/localtime:ro
+    environment:
+      - TZ=Europe/London
+      - PUID=1000 # for UserID
+      - PGID=1000 # for GroupID
+      - MYSQL_ROOT_PASSWORD=toor
+      - MYSQL_PASSWORD=mysql
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+    restart: unless-stopped
+
+#volumes:
+#  #nextcloud:
+#  db:
+
+networks:
+  nextcloud_network:
