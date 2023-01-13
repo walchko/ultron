@@ -1,7 +1,5 @@
----
-title: Cross Compiling ARM Binaries for Raspberry Pi
-date: 21 Sept 2019
----
+# Cross Compiling ARM Binaries for Raspberry Pi
+
 
 Steps:
 
@@ -63,7 +61,7 @@ CMD ["node", "main.js"]
 
 # Example
 
-```docker
+```dockerfile
 FROM resin/armv7hf-debian-qemu
 
 RUN [ "cross-build-start" ]
