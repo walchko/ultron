@@ -1,7 +1,5 @@
----
-title: Running ROS in a Docker Container
-date: 14 Sept 2019
----
+
+# Running ROS1 in a Docker Container
 
 The basics are [here](http://wiki.ros.org/docker/Tutorials/Docker) on the
 ros wiki website.
@@ -13,8 +11,8 @@ ros wiki website.
 1. See the container started:
     ```
     $ docker ps -l
-    CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
-    403b06247a82        ros                 "/ros_entrypoint.sh …"   8 minutes ago       Up 8 minutes                            thirsty_swanson
+    CONTAINER ID  IMAGE  COMMAND                  CREATED         STATUS        PORTS NAMES
+    403b06247a82  ros    "/ros_entrypoint.sh …"   8 minutes ago   Up 8 minutes        thirsty_swanson
     ```
 1. Get another command line: `docker exec -it thirsty_swanson bash`
     1. Note, from the `docker ps -l` command, my container is called `thirsty_swanson`
