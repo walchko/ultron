@@ -1,7 +1,4 @@
----
-title: Setup Docker on RPi
-date: 22 Sept 2019
----
+# Setup Docker on RPi
 
 Docker is a light weight abstraction of a system overlaid onto a
 host computer. Various perforance assessments show there is little
