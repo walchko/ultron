@@ -1,7 +1,5 @@
----
-title: Setup Docker on Ubuntu
-date: 14 Sept 2019
----
+# Setup Docker on Ubuntu
+
 
 The offical instructions are [here](https://docs.docker.com/install/linux/docker-ce/ubuntu/) 
 for the Community Edition (CE). The basics are:
