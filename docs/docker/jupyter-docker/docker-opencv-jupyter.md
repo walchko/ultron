@@ -1,7 +1,5 @@
----
-title: Setting Up a Docker Container with OpenCV and Jupyter Notebooks
-date: 4 Mar 2017
----
+# Setting Up a Docker Container with OpenCV and Jupyter Notebooks
+
 
 ![](pics/docker.png)
 
