@@ -1,0 +1,17 @@
+---
+version: '3'
+
+services:
+  debian:
+    build: .
+    image: walchko/debian
+    container_name: debian-container
+    hostname: debian
+    ports:
+      # - "443:443/tcp"
+      - "2222:22/tcp"
+
+    # environment:
+      # TZ: 'America/Chicago'
+      # VIRTUAL_HOST: debian.local
+      # ServerIP: 10.0.1.7

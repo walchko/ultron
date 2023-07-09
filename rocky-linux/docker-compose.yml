@@ -1,0 +1,12 @@
+---
+version: '3'
+
+services:
+  rocky:
+    build: .
+    image: walchko/rocky
+    container_name: rocky-container
+    hostname: rocky
+    ports:
+      # - "443:443/tcp"
+      - "2222:22/tcp"

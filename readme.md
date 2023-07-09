@@ -117,6 +117,46 @@ docker rmi $(docker images -a -q) # delete all images
 docker rm $(docker ps -aq) # delete all containers
 ```
 
+## `docker-compose`
+
+```yaml
+---
+version: '3'
+
+services:
+  debian:
+    build: .
+    image: walchko/debian:0.1
+    container_name: debiancontainer
+    hostname: debianhost
+    ports:
+      # - "443:443/tcp"
+      - "2222:22/tcp"
+```
+
+```
+(py)  kevin@Logan ultron % ./docker-tools.sh
+
+[System]-------------------------
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          5         2         658.6MB   341.4MB (51%)
+Containers      2         1         292.7kB   292.7kB (99%)
+Local Volumes   0         0         0B        0B
+Build Cache     42        0         1.485GB   1.485GB
+[Containers]---------------------
+CONTAINER ID  IMAGE              COMMAND                 CREATED        STATUS        PORTS                 NAMES
+63da953f56a9  walchko/debian:0.1 "/usr/sbin/sshd -D"     9 seconds ago  Up 9 seconds  0.0.0.0:2222->22/tcp  debiancontainer
+c69a8159c9d9  walchko/rocky:0.1  "/usr/sbin/sshd -D -e"  36 hours ago   Exited (0) 36 hours ago             rocky
+[Images]-------------------------
+REPOSITORY       TAG       IMAGE ID       CREATED        SIZE
+walchko/debian   0.1       1af297533e07   6 hours ago    229MB
+<none>           <none>    5839e60a0081   6 hours ago    229MB
+<none>           <none>    20fdf844a080   6 hours ago    229MB
+<none>           <none>    764d8562c3ee   30 hours ago   229MB
+walchko/rocky    0.1       25293b510163   36 hours ago   205MB
+
+```
+
 # License MIT
 
 **Copyright (c) 2019 Kevin J. Walchko**
