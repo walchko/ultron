@@ -6,6 +6,8 @@ I am grouping some of my docker containers together:
 
 - Pi Hole ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/pihole/pihole)
 - Octoprint ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/octoprint/octoprint)
+- Debian Linux ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/walchko/debian/latest)
+- Rocky Linux ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/walchko/rocky/latest)
 
 ## Instructions for Using Existing Images from DockerHub
 
