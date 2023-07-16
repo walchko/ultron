@@ -14,7 +14,8 @@ else
 fi
 
 if [[ ${CMD} == "help" ]]; then
-    usage
+    useage
+    exit 0
 elif [[ ${CMD} == "clean" ]]; then
     # remove intermediate images with TAG <none>
     docker images | egrep "^<none>" | awk '{print $3}' | xargs docker rmi -f

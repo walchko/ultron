@@ -2,6 +2,8 @@
 
 # Rocky Linux
 
+- Rocky Linux ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/walchko/rocky/latest)
+
 Since Redhat is being a bunch of ass hats and not letting your use
 Redhat w/o a license (also shutdown Centos), Rocky Linux is supposed
 to be a good surrogate since it is based on Centos.
