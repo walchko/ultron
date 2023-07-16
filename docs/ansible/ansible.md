@@ -1,7 +1,7 @@
 
-![]("https://upload.wikimedia.org/wikipedia/commons/2/24/Ansible_logo.svg")
+![](https://upload.wikimedia.org/wikipedia/commons/2/24/Ansible_logo.svg)
 
-# Ansible Notes
+---
 
 Ansible is an agentless automation scripting language (using yaml files and back end is python) that uses SSH to access servers and execute commands. Owned now by Red Hat, but still open source.
 
@@ -190,16 +190,16 @@ Can make more generic by using the `package` module rather than the `apt` module
   hosts: all
   tasks:
     - name: Pass options to dpkg on run
-      apt:
+      ansible.builtin.apt:
         upgrade: dist
         update_cache: yes
 
     - name: Remove useless packages from the cache
-      apt:
+      ansible.builtin.apt:
         autoclean: yes
 
     - name: Remove dependencies that are no longer required
-      apt:
+      ansible.builtin.apt:
         autoremove: yes
 ```
 
