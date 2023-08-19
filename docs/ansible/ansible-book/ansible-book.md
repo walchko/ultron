@@ -1,10 +1,10 @@
 # Ansible for DevOps
 
-![](ansible-book-cover.jpg)
+[PDF][1]      [EPUB][2]
 
-![](jeff-tweet.jpng)
+[<img src="jeff-tweet.png" width="500px">][1]
 
-[PDF][1] [EPUB][2]
+[<img src="ansible-book-cover.jpg" width="500px">][1]
 
 [1]: ansible-for-devops.pdf
 [2]: ansible-for-devops.epub
