@@ -1,0 +1,39 @@
+export CHARSET=${CHARSET:-UTF-8}
+export LANG=${LANG:-C.UTF-8}
+export LC_COLLATE=${LC_COLLATE:-C}
+
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+# If not running interactively, don't do anything
+# case $- in
+#     *i*) ;;
+#       *) return;;
+# esac
+if [[ $- != *i* ]] ; then
+	# Shell is non-interactive.  Be done now!
+	return
+fi
+
+
+export PAGER=less
+umask 022
+
+ID=`id -u`
+if [[ "${ID}" == "0" ]]; then
+    USR="\[\033[01;31m\]"
+    HOST="\[\033[01;36m\]"
+    DIR="\[\033[01;34m\]"
+    END="\[\033[0m\]"
+    export PS1="$USR\u@$HOST\h $DIR\W $USR#$END "
+else
+    USR="\[\033[01;32m\]"
+    HOST="\[\033[01;35m\]"
+    DIR="\[\033[01;34m\]"
+    END="\[\033[0m\]"
+    export PS1="$USR\u@$HOST\h $DIR\W$END \$ "
+fi
+
+# colored GCC warnings and errors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+export EDITOR=nano

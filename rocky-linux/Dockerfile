@@ -3,14 +3,13 @@ ENV ROOT_PASSWORD root
 ENV ALICE_PASSWORD alice
 ENV TIMEZONE America/Los_Angeles
 
+# sed -i 's/^#\(PermitRootLogin\) .*/\1 yes/' /etc/ssh/sshd_config; \
 # sshd setup
-RUN dnf -y --nodocs install openssh-server openssh-clients; \
+RUN dnf -y --nodocs install openssh-server; \
     sed -i 's/^\(UsePAM yes\)/# \1/' /etc/ssh/sshd_config; \
-    sed -i 's/^#\(PermitRootLogin\) .*/\1 yes/' /etc/ssh/sshd_config; \
     ssh-keygen -q -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key -N '' && \
     ssh-keygen -q -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -N '' && \
     ssh-keygen -q -t dsa -f /etc/ssh/ssh_host_ed25519_key  -N ''; \
-    rm -f /run/nologin; \
     dnf -y clean all;
 
 # subscription-manager

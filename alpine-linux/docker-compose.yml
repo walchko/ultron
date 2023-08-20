@@ -1,0 +1,11 @@
+---
+version: '3'
+
+services:
+  debian:
+    build: .
+    image: walchko/alpine
+    container_name: alpine-container
+    hostname: alpine
+    ports:
+      - "2222:22/tcp"
