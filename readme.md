@@ -2,23 +2,7 @@
 
 ![GitHub](https://img.shields.io/github/license/walchko/ultron)
 
-I am grouping some of my docker containers together:
-
-- Pi Hole ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/pihole/pihole)
-- Octoprint ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/octoprint/octoprint)
-- Debian Linux ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/walchko/debian/latest)
-- Rocky Linux ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/walchko/rocky/latest)
-
-## Instructions for Using Existing Images from DockerHub
-
-- Run `docker-compose` pull to get latest image
-- Run `docker-compose up -d` to get things going
-    - `-d` will detach it from the terminal, you can omit and use `ctrl-c` to shut it down
-- Terminate with `docker-compose down`
-- You **must** be in this sub folder with the `docker-compose.yaml` to run `up` and `down` commands
-
-
-## Instructions for Building Images
+Various docker containers I use.
 
 1. `cd` into folder
 1. `docker-compose build --compress --force-rm --no-cache --pull --parallel`
@@ -128,11 +112,10 @@ version: '3'
 services:
   debian:
     build: .
-    image: walchko/debian:0.1
+    image: walchko/debian:latest
     container_name: debiancontainer
     hostname: debianhost
     ports:
-      # - "443:443/tcp"
       - "2222:22/tcp"
 ```
 
