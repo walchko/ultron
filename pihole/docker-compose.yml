@@ -10,12 +10,15 @@ services:
     ports:
       - "53:53/tcp"
       - "53:53/udp"
-      # - "67:67/udp"  # dhcp
+      # - "67:67/udp"  # only if using pihole for dhcp
       - "80:80/tcp"
       - "443:443/tcp"
     hostname: pihole-dalek
     environment:
-      TZ: 'America/Chicago'
+      TZ: ${TIMEZONE}
+      # DNSMASQ_USER: root
+      # PIHOLE_UID: 1000
+      # PIHOLE_GID: 0
       VIRTUAL_HOST: pihole-docker.local
       # ServerIP: ${HOST_IP}
       WEBPASSWORD: ${PASSWORD}
@@ -26,11 +29,11 @@ services:
     volumes:
       - './etc-pihole/:/etc/pihole/'
       - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
-    # dns:
-    #   - ${DNS_1}
-    #   - ${DNS_2}
+    dns:
+      - ${DNS_1}
+      - ${DNS_2}
     # Recommended but not required (DHCP needs NET_ADMIN)
     #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
     cap_add:
-      - NET_ADMIN
+      - NET_ADMIN # only needed if using pihole for DHCP
     restart: unless-stopped

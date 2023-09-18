@@ -32,6 +32,11 @@ For Ubuntu systems, summary of steps:
 - To terminate, use: `docker-compose down`
 - You must be in this sub folder with the yaml to run `up` and `down` commands
 
+## `sed` Temporary Files
+
+Switching from VirtioFS to gRPC FUSE in the Docker Desktop settings fixed issues with 
+temporary `sed` files having no read/write permissions.
+
 ## Apple Mail Fixes
 
 Recent versions of Pi-hole automatically sink hole requests to two key Apple domains (mask.icloud.com and mask-h2.icloud.com) to prevent the Apple Private Relay feature from bypassing Pi-hole. Due to this, the "Protect Mail Activity" feature in iOS 15 may not work when connected to a network using a Pi-hole server.
