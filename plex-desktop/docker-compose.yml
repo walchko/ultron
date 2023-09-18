@@ -1,8 +1,10 @@
 ---
-version: "2.1"
+version: "3"
 services:
   plex:
-    image: ghcr.io/linuxserver/plex
+    # this works: 1.32.0.6918-6f393eda1-ls162 Apr 17 2023
+    # image: ghcr.io/linuxserver/plex:1.32.0.6918-6f393eda1-ls162
+    image: ghcr.io/linuxserver/plex:latest
     container_name: plex
     # network_mode: host # this works for linux
     hostname: dalek
@@ -10,12 +12,13 @@ services:
       - PUID=501 #1000
       - PGID=501 #1000
       - VERSION=docker
-      # - PLEX_CLAIM= #optional
+      # - PLEX_CLAIM=claim-6G6q3f4WL9hhJyFfyszw #optional
     volumes:
       - ./library:/config
       #- ../../../Movies:/media
       #- /mnt/usbdrive:/media
       - /Volumes/arrow:/media
+      # - /tmp:/media
     restart: unless-stopped
     ports: # need to do this on macOS, linux doesn't need it
       - 32400:32400/tcp

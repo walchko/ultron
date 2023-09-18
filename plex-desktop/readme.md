@@ -1,12 +1,10 @@
 ![](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png)
 
-# Pi Plex Server
+# Plex Server
 
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/linuxserver/plex)
 
-Docker runs great on a Raspberry Pi 3 and better on a 4.
-
-## Setup
+## Pi 3/4 Setup
 
 - Install `docker`
 - Setup `python3` and `docker-compose` in a virtual environment
@@ -16,6 +14,21 @@ Docker runs great on a Raspberry Pi 3 and better on a 4.
     - `pip install -U pip setuptools wheel docker-compose`
     - Add `. ~/venv/bin/activate` to `.bashrc`
 - Create `docker-compose.yml`
+
+## macOS Setup
+
+- Install `docker` and make sure it is running
+- Create `docker-compose.yml`
+
+## New Server Setup
+
+Get a claim number from: https://www.plex.tv/claim/ 
+
+Put this into your `docker-compose.yml`:
+
+```yaml
+  - PLEX_CLAIM=claim-6G6q3f4WL9hhJyFfyszw #optional
+```
 
 ### Errors
 
@@ -55,7 +68,7 @@ services:
     restart: unless-stopped
 ```
 
-## USB Hard Drive
+## Linux USB Hard Drive
 
 Find the UUID for the usb hard drive:
 
