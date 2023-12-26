@@ -33,7 +33,7 @@ Proxmox Virtual Environment is a complete, open-source server management platfor
 
 ## Services to Host
 
-- [Paperless](https://github.com/paperless-ngx/paperless-ngx) document database
+- [Paperless](https://github.com/paperless-ngx/paperless-ngx) document database ([tutorial](https://www.youtube.com/watch?v=uT9Q5WdBGos&t=687s))
 - [OpnSense](https://opnsense.org) firewall
 - PiHole (do in a container [example](https://www.youtube.com/watch?v=k0TwkSwLYWA))
 
