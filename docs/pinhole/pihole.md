@@ -2,6 +2,12 @@
 
 ---
 
+## Whitelist
+
+Add to `Domains` tab:
+
+- weather.com: mparticle.weather.com
+
 ## Use DHCP
 
 1. Setup Google WiFi to **ONLY** service 1 address to pihole server
