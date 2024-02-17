@@ -1,0 +1,26 @@
+---
+# - hosts: all
+# - hosts: macos
+#   become: no
+#   tasks:
+#     - name: Test
+#       ansible.builtin.debug:
+#         msg: "{{ ansible_facts.hostname }} {{ ansible_facts.default_ipv4.address }} {{ ansible_facts.model }}"
+- hosts: linux
+  become: no
+  tasks:
+    - name: Test
+      ansible.builtin.debug:
+        # var: ansible_facts
+        msg: "{{ ansible_facts.hostname }} {{ ansible_facts.eth0.ipv4.address }}"
+    - name: Update RasPi OS
+      ansible.builtin.include_tasks:
+        file: tasks/apt.yml
+    - name: Reboot the machine
+      ansible.builtin.reboot:
+      become: yes
+    - name: Update PiHole
+      ansible.builtin.include_tasks:
+        file: tasks/pihole.yml
+
+

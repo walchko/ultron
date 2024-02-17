@@ -1,0 +1,14 @@
+---
+- name: Update Plex pull
+  ansible.builtin.shell:
+    cmd: ". /home/pi/venv/bin/activate && docker-compose pull"
+    chdir: /home/pi/github/ultron/pihole
+  become: no
+- name: Plex update
+  ansible.builtin.shell: |
+    . /home/pi/venv/bin/activate
+    cd ~/github/ultron/pihole
+    docker-compose -f docker-compose.yml down
+    sleep 1
+    docker-compose -f docker-compose.yml up -d
+  become: no

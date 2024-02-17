@@ -1,0 +1,16 @@
+---
+version: '3'
+
+services:
+  debian:
+    build: .
+    image: walchko/ansible
+    container_name: ansible-container
+    hostname: ansible
+    ports:
+      - "2222:22/tcp"
+    volumes:
+      - ./ansible:/opt/ansible
+    restart: unless-stopped
+    environment:
+      TZ: 'America/Chicago'

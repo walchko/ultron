@@ -1,0 +1,14 @@
+---
+- name: Update Homebrew
+  ansible.builtin.shell:
+    cmd: "brew update"
+- name: Update Homebrew
+  ansible.builtin.shell:
+    cmd: "brew upgrade {{ item }}"
+  loop:
+    - python
+    - htop
+- name: Update macOS
+  ansible.builtin.shell:
+    cmd: "softwareupdate --install --all --agree-to-license"
+  become: yes
