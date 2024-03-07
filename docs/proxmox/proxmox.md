@@ -39,6 +39,37 @@ Proxmox Virtual Environment is a complete, open-source server management platfor
 apt install avahi-daemon
 ```
 
+## Sensors
+
+```
+apt install hddtemp lm-sensors
+```
+
+```
+# sensors
+coretemp-isa-0000
+Adapter: ISA adapter
+Package id 0:  +31.0°C  (high = +84.0°C, crit = +100.0°C)
+Core 0:        +29.0°C  (high = +84.0°C, crit = +100.0°C)
+Core 1:        +28.0°C  (high = +84.0°C, crit = +100.0°C)
+Core 2:        +28.0°C  (high = +84.0°C, crit = +100.0°C)
+Core 3:        +27.0°C  (high = +84.0°C, crit = +100.0°C)
+
+acpitz-acpi-0
+Adapter: ACPI interface
+temp1:        +27.8°C  (crit = +119.0°C)
+temp2:        +29.8°C  (crit = +119.0°C)
+
+nouveau-pci-0100
+Adapter: PCI adapter
+GPU core:    900.00 mV (min =  +0.88 V, max =  +1.08 V)
+temp1:        +45.0°C  (high = +95.0°C, hyst =  +3.0°C)
+                       (crit = +105.0°C, hyst =  +5.0°C)
+                       (emerg = +135.0°C, hyst =  +5.0°C)
+```
+
+[displaying in proxmox](https://www.reddit.com/r/homelab/comments/rhq56e/displaying_cpu_temperature_in_proxmox_summery_in/)
+
 ## Wake-on-LAN
 
 - [proxmox forum](https://forum.proxmox.com/threads/wake-on-lan-on-pve.124785/)
