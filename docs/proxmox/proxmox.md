@@ -31,11 +31,21 @@ Proxmox Virtual Environment is a complete, open-source server management platfor
 - Full virtualization with KVM/QEMU
 - OS-level virtualization with LXC
 
-## Services to Host
+# Post Install Configuration
 
-- [Paperless](https://github.com/paperless-ngx/paperless-ngx) document database ([tutorial](https://www.youtube.com/watch?v=uT9Q5WdBGos&t=687s))
-- [OpnSense](https://opnsense.org) firewall
-- PiHole (do in a container [example](https://www.youtube.com/watch?v=k0TwkSwLYWA))
+## Avahi Setup
+
+```
+apt install avahi-daemon
+```
+
+## Wake-on-LAN
+
+- [proxmox forum](https://forum.proxmox.com/threads/wake-on-lan-on-pve.124785/)
+
+## Adding Hard Drives
+
+- [proxmox forum](https://forum.proxmox.com/threads/how-to-add-hard-drive-to-host.119376/)
 
 ## Generate SSL Certs
 
@@ -52,7 +62,13 @@ Directions [here](https://www.youtube.com/watch?v=qlcVx-k-02E)
     - supports Let's Encrypt `DNS-01` verification
       - create wildcard certs for other services
  
+# Services to Host
 
+- [Paperless](https://github.com/paperless-ngx/paperless-ngx) document database ([tutorial](https://www.youtube.com/watch?v=uT9Q5WdBGos&t=687s))
+- [OpnSense](https://opnsense.org) firewall
+- PiHole (LXC container):
+  - [youtube video](https://www.youtube.com/watch?v=k0TwkSwLYWA)
+  - [geekbitzone](https://www.geekbitzone.com/posts/2022/proxmox/plex-lxc/install-plex-in-proxmox-lxc/)
 
 
 
