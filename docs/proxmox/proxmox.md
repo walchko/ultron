@@ -97,7 +97,9 @@ Directions [here](https://www.youtube.com/watch?v=qlcVx-k-02E)
 
 - [Paperless](https://github.com/paperless-ngx/paperless-ngx) document database ([tutorial](https://www.youtube.com/watch?v=uT9Q5WdBGos&t=687s))
 - [OpnSense](https://opnsense.org) firewall
-- PiHole in LXC container: [youtube video](https://www.youtube.com/watch?v=k0TwkSwLYWA)
+- PiHole in LXC container:
+  - [youtube video](https://www.youtube.com/watch?v=k0TwkSwLYWA)
+  - [post](https://www.naturalborncoder.com/linux/2023/07/12/installing-pi-hole-on-proxmox/)
 - Plex in LXC container: [geekbitzone](https://www.geekbitzone.com/posts/2022/proxmox/plex-lxc/install-plex-in-proxmox-lxc/)
 
 
