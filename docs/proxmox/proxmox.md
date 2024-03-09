@@ -92,7 +92,106 @@ Directions [here](https://www.youtube.com/watch?v=qlcVx-k-02E)
           or set IP addresses in the DNS
     - supports Let's Encrypt `DNS-01` verification
       - create wildcard certs for other services
- 
+
+## Reduce Power - NOT WORKING
+
+**keeps booting into `performance` and setting it to `powersave` does nothing ... fan runs like mad**
+
+### Bios
+
+Turned off Turbo boost mode in BIOS - NOJOY
+
+### cpufrequtils
+
+**being replaced by cpupower?**
+
+```
+DIDN'T WORK
+# Ref: https://forum.proxmox.com/threads/fix-always-high-cpu-frequency-in-proxmox-host.84270/
+# Ref: https://wiki.archlinux.org/title/CPU_frequency_scaling
+## cpu scaling
+# proxmox uses performance by default change to powersave to enable cpu scaling
+# cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+apt install cpufrequtils
+
+cat << 'EOF' > /etc/default/cpufrequtils
+GOVERNOR="powersave"
+EOF
+```
+
+### cpupower
+
+**doesn't work**
+
+```
+# cpupower -c all frequency-set -g powersave
+Setting cpu: 0
+Setting cpu: 1
+Setting cpu: 2
+Setting cpu: 3
+Setting cpu: 4
+Setting cpu: 5
+Setting cpu: 6
+Setting cpu: 7
+root@proxmox:~# cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+powersave
+powersave
+powersave
+powersave
+powersave
+powersave
+powersave
+powersave
+```
+
+```
+# cpupower frequency-info
+analyzing CPU 0:
+  driver: intel_pstate
+  CPUs which run at the same hardware frequency: 0
+  CPUs which need to have their frequency coordinated by software: 0
+  maximum transition latency:  Cannot determine or is not supported.
+  hardware limits: 800 MHz - 3.40 GHz
+  available cpufreq governors: performance powersave
+  current policy: frequency should be within 800 MHz and 3.40 GHz.
+                  The governor "powersave" may decide which speed to use
+                  within this range.
+  current CPU frequency: Unable to call hardware
+  current CPU frequency: 800 MHz (asserted by call to kernel)
+  boost state support:
+    Supported: no
+    Active: no
+```
+
+### linux
+
+Double check which states are valid:
+
+```
+# cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors
+performance powersave
+```
+
+Other systems might have other modes, but mine has these two. You should be able to 
+put the system into `powersave` or `performance`.
+
+```
+# echo "powersave" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+powersave
+
+# cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+powersave
+powersave
+powersave
+powersave
+powersave
+powersave
+powersave
+powersave
+```
+
+- [home assistant and proxmox](https://community.home-assistant.io/t/psa-how-to-configure-proxmox-for-lower-power-usage/323731/4)
+
 # Services to Host
 
 - [Paperless](https://github.com/paperless-ngx/paperless-ngx) document database ([tutorial](https://www.youtube.com/watch?v=uT9Q5WdBGos&t=687s))
