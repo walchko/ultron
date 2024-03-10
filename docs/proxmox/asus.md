@@ -1,5 +1,55 @@
 # Asus
 
+## BIOS
+
+- Advanced
+  - SA Config
+    - vt-d `enabled` ✅
+    - above 4G `enabled` ✅
+  - Intel virtualization `enabled` ✅
+  - CPU Power Mgt
+    - Turbo mode `disabled` ❌
+  - APM
+    - Power PCIe
+      - Wake-on-LAN `enabled` ✅
+  - Onboard device config
+    - Parallel port `disabled` ❌
+- Ai Tweaker
+  - CPU power mgt
+    - Intel speedstep `auto`
+    - Turbo mode `disabled` ❌
+  - CPU Core ratio `per core`
+  - EPU power mode `enabled` ✅
+- Monitor
+  - Anti-surge support (OVP UVP) `enabled` ✅
+  - Fan 1 `disabled` ❌
+  - Fan 2 `motherboard` `enabled` ✅
+
+## `apt`
+
+Installed but not sure the value of this:
+- `linux-cpupower`
+- `cpufrequtils`
+- `cpufreqd`
+  ```
+  cat /etc/default/cpufreqd 
+  # Cpufreqd startup configuration
+  
+  # CPU kernel module.
+  # Leave empty if you wish to load the modules another way,
+  # or if CPUFreq support for your cpu is built in.
+  CPUFREQ_CPU_MODULE=""
+  
+  # Governor modules.
+  # A list separated by spaces. They are needed by cpufreqd 
+  # to load your policies. The init script can automatically
+  # try to load them. Leave empty to disable loading governor
+  # modules at all, use "auto" to let the script do the job.
+  CPUFREQ_GOV_MODULES="auto"
+  ```
+
+## Command Outputs
+
 ```
 # lspci
 00:00.0 Host bridge: Intel Corporation Xeon E3-1200 v5/E3-1500 v5/6th Gen Core Processor Host Bridge/DRAM Registers (rev 07)
