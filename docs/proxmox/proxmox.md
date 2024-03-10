@@ -241,7 +241,7 @@ powersave
 LOAD   = Reflects whether the unit definition was properly loaded.
 ACTIVE = The high-level unit activation state, i.e. generalization of SUB.
 SUB    = The low-level unit activation state, values depend on unit type.
-34 loaded units listed.
+33 loaded units listed.
 ```
 
 
