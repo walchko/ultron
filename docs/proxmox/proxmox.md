@@ -203,8 +203,7 @@ powersave
 
 ```
 # systemctl list-units --type=service --state=running
-  UNIT                     LOAD   ACTIVE SUB     DESCRIPTION                                            
-  acpid.service            loaded active running ACPI event daemon
+  UNIT                     LOAD   ACTIVE SUB     DESCRIPTION 
   avahi-daemon.service     loaded active running Avahi mDNS/DNS-SD Stack
   chrony.service           loaded active running chrony, an NTP client/server
   cpufreqd.service         loaded active running LSB: start and stop cpufreqd
