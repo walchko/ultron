@@ -3,8 +3,10 @@
 I would do it this way:
 
 1. create that mountpoint first: `mkdir /mnt/backupHDD`
-2. find out the `UUID` or `PARTUUID` of the partition of your backup disk. In your case of sda1: blkid | grep sda1 | grep UUID=
-3. edit fstab: `nano /etc/fstab`, add something like this there in case you found a `PARTUUID`:
+2. find out the `UUID` or `PARTUUID` of the partition of your backup disk.
+   In your case of sda1: `blkid | grep sda1 | grep UUID=`
+4. edit fstab: `nano /etc/fstab`, add something like this there in case you
+   found a `PARTUUID`:
   ```
   PARTUUID=xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxx   /mnt/backupHDD   ext4   defaults   0   2
   ```
