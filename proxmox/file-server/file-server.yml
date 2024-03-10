@@ -1,0 +1,70 @@
+---
+- name: Setup File Server
+  hosts: all
+  become: yes
+  tasks:
+    - name: Update all packages to their latest version
+      ansible.builtin.apt:
+        name: "*"
+        state: latest
+        update_cache: yes
+        autoclean: yes
+        autoremove: yes
+        clean: yes
+    # Samba requires ports 137, 138, 139, 445 to be open to function properly
+    # root: yes
+    - name: Install Samba
+      ansible.builtin.apt:
+        pkg:
+        - samba
+        - samba-common
+        - samba-common-bin
+        - cifs-utils
+        - python3-pexpect
+    # - name: Create smb.conf
+    #   template:
+    #     src: ../templates/smb.conf.j2
+    #     dest: /etc/samba/smb.conf
+    #     owner: root
+    #     group: root
+    #     mode: '0600'
+    #     backup: yes
+    #   become: yes
+
+    - name: Install NFS
+      ansible.builtin.apt:
+        name: nfs-kernel-server
+    - name: Create a plex directory if it does not exist
+      ansible.builtin.file:
+        path: /mnt/plex
+        state: directory
+        mode: '0755'
+
+    - name: Install Avahi
+      ansible.builtin.apt:
+        name: avahi-daemon
+
+    # - name: Enable Samba server
+    #   ansible.builtin.service:
+    #     name: smbd.service
+    #     state: started
+    #     enabled: yes
+    # - name: Enable NFS server
+    #   ansible.builtin.service:
+    #     name: nfs-kernel-server.service
+    #     state: started
+    #     enabled: yes
+    - name: Enable Samba and NFS systemd services
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        enabled: yes
+        state: started
+      with_items:
+        - 'nfs-kernel-server.service'
+        - 'smbd.service'
+
+    - name: aptitude autoremove
+        ansible.builtin.apt:
+          autoclean: yes
+          autoremove: yes
+          clean: yes
