@@ -36,3 +36,6 @@ https://v.firebog.net/hosts/static/w3kbl.txt
 # References
 
 - [Install](https://www.naturalborncoder.com/linux/2023/07/12/installing-pi-hole-on-proxmox/)
+- PiHole in LXC container:
+  - [youtube video](https://www.youtube.com/watch?v=k0TwkSwLYWA)
+  - [post](https://www.naturalborncoder.com/linux/2023/07/12/installing-pi-hole-on-proxmox/)
