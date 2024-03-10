@@ -157,6 +157,12 @@ Vulnerabilities:
 
 **solved?**
 
+Removing the GT 750 seemed to solve the problem. Not sure if it was:
+
+- restricting air flow
+- driver was doing something
+- things got worse after bios upgrade, tempted to think it was tied to that
+
 ```
 # sensors
 coretemp-isa-0000
