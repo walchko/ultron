@@ -31,6 +31,18 @@ Proxmox Virtual Environment is a complete, open-source server management platfor
 - Full virtualization with KVM/QEMU
 - OS-level virtualization with LXC
 
+## `fstab`
+
+```
+# cat /etc/fstab
+
+# <file system> <mount point> <type> <options> <dump> <pass>
+/dev/pve/root / ext4 errors=remount-ro 0 1
+UUID=8FF4-D0E0 /boot/efi vfat defaults 0 1
+/dev/pve/swap none swap sw 0 0
+proc /proc proc defaults 0 0
+```
+
 # Post Install Configuration
 
 ## Avahi Setup
@@ -93,17 +105,9 @@ Directions [here](https://www.youtube.com/watch?v=qlcVx-k-02E)
     - supports Let's Encrypt `DNS-01` verification
       - create wildcard certs for other services
 
-## Reduce Power - NOT WORKING
-
-**keeps booting into `performance` and setting it to `powersave` does nothing ... fan runs like mad**
-
-### Bios
-
-Turned off Turbo boost mode in BIOS - NOJOY
+## Reduce Power
 
 ### cpufrequtils
-
-**being replaced by cpupower?**
 
 ```
 DIDN'T WORK
@@ -120,8 +124,6 @@ EOF
 ```
 
 ### cpupower
-
-**doesn't work**
 
 ```
 # cpupower -c all frequency-set -g powersave
@@ -161,105 +163,6 @@ analyzing CPU 0:
   boost state support:
     Supported: no
     Active: no
-```
-
-### i7z
-
-I think this just shows status
-
-```
-Cpu speed from cpuinfo 3408.00Mhz
-cpuinfo might be wrong if cpufreq is enabled. To guess correctly try estimating via tsc
-Linux's inbuilt cpu_khz code emulated now
-True Frequency (without accounting Turbo) 3407 MHz
-  CPU Multiplier 34x || Bus clock frequency (BCLK) 100.21 MHz
-
-Socket [0] - [physical cores=4, logical cores=8, max online cores ever=4]
-  TURBO DISABLED on 4 Cores, Hyper Threading ON
-  Max Frequency without considering Turbo 3407.00 MHz (100.21 x [34])
-  Max TURBO Multiplier (if Enabled) with 1/2/3/4 Cores is  40x/39x/38x/37x
-  Real Current Frequency 3390.88 MHz [100.21 x 33.84] (Max of below)
-        Core [core-id]  :Actual Freq (Mult.)      C0%   Halt(C1)%  C3 %   C6 %  Temp      VCore
-        Core 1 [0]:       2664.35 (26.59x)         1     100       0       0    25      1.1426
-        Core 2 [1]:       3390.88 (33.84x)         1    99.9       0       0    27      1.1223
-        Core 3 [2]:       3102.56 (30.96x)         1     100       0       0    26      1.1423
-        Core 4 [3]:       3126.36 (31.20x)         1    99.9       0       0    25      1.1425
-
-
-
-C0 = Processor running without halting
-C1 = Processor running with halts (States >C0 are power saver modes with cores idling)
-C3 = Cores running with PLL turned off and core cache turned off
-C6, C7 = Everything in C3 + core state saved to last level cache, C7 is deeper than C6
-  Above values in table are in percentage over the last 1 sec
-[core-id] refers to core-id number in /proc/cpuinfo
-'Garbage Values' message printed when garbage values are read
-  Ctrl+C to exit
-```
-
-```
-# i7z
-i7z DEBUG: i7z version: svn-r93-(27-MAY-2013)
-i7z DEBUG: Found Intel Processor
-i7z DEBUG:    Stepping 3
-i7z DEBUG:    Model e
-i7z DEBUG:    Family 6
-i7z DEBUG:    Processor Type 0
-i7z DEBUG:    Extended Model 5
-i7z DEBUG: msr = Model Specific Register
-i7z DEBUG: Unknown processor, not exactly based on Nehalem, Sandy bridge or Ivy Bridge
-i7z DEBUG: msr device files exist /dev/cpu/*/msr
-i7z DEBUG: You have write permissions to msr device files
-
-------------------------------
---[core id]--- Other information
--------------------------------------
---[0] Processor number 0
---[0] Socket number/Hyperthreaded Sibling number  0,4
---[0] Core id number 0
---[0] Display core in i7z Tool: Yes
-
---[1] Processor number 1
---[1] Socket number/Hyperthreaded Sibling number  0,5
---[1] Core id number 1
---[1] Display core in i7z Tool: Yes
-
---[2] Processor number 2
---[2] Socket number/Hyperthreaded Sibling number  0,6
---[2] Core id number 2
---[2] Display core in i7z Tool: Yes
-
---[3] Processor number 3
---[3] Socket number/Hyperthreaded Sibling number  0,7
---[3] Core id number 3
---[3] Display core in i7z Tool: Yes
-
---[4] Processor number 4
---[4] Socket number/Hyperthreaded Sibling number  0,0
---[4] Core id number 0
---[4] Display core in i7z Tool: No
-
---[5] Processor number 5
---[5] Socket number/Hyperthreaded Sibling number  0,1
---[5] Core id number 1
---[5] Display core in i7z Tool: No
-
---[6] Processor number 6
---[6] Socket number/Hyperthreaded Sibling number  0,2
---[6] Core id number 2
---[6] Display core in i7z Tool: No
-
---[7] Processor number 7
---[7] Socket number/Hyperthreaded Sibling number  0,3
---[7] Core id number 3
---[7] Display core in i7z Tool: No
-
-Socket-0 [num of cpus 4 physical 4 logical 8] 3,
-Socket-1 [num of cpus 0 physical 0 logical 0] 
-GUI has been Turned ON
-i7z DEBUG: Single Socket Detected
-i7z DEBUG: In i7z Single_Socket()
-i7z DEBUG: guessing Nehalem
 ```
 
 ### linux
