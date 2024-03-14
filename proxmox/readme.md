@@ -4,6 +4,18 @@
 
 Setup new Proxmox LXC Debian 12 contrainers
 
+## Users
+
+By default you can not ssh into a VM as root and VNC in proxmox doesn't
+support copy/paste, so it is easier/safer to setup a user that can
+ssh in and execute commands with copy/paste.
+
+```
+apt install sudo
+adduser [username]
+usermod -aG sudo [username]
+```
+
 ## Commands
 
 ```

@@ -1,26 +1,27 @@
+# ansible-playbook -i <ip>, -u root file-server.yml
 ---
 - name: Setup File Server
   hosts: all
   become: yes
   tasks:
-    - name: Update all packages to their latest version
-      ansible.builtin.apt:
-        name: "*"
-        state: latest
-        update_cache: yes
-        autoclean: yes
-        autoremove: yes
-        clean: yes
+    # - name: Update all packages to their latest version
+    #   ansible.builtin.apt:
+    #     name: "*"
+    #     state: latest
+    #     update_cache: yes
+    #     autoclean: yes
+    #     autoremove: yes
+    #     clean: yes
     # Samba requires ports 137, 138, 139, 445 to be open to function properly
     # root: yes
-    - name: Install Samba
-      ansible.builtin.apt:
-        pkg:
-        - samba
-        - samba-common
-        - samba-common-bin
-        - cifs-utils
-        - python3-pexpect
+    # - name: Install Samba
+    #   ansible.builtin.apt:
+    #     pkg:
+    #     - samba
+    #     - samba-common
+    #     - samba-common-bin
+    #     - cifs-utils
+    #     - python3-pexpect
     # - name: Create smb.conf
     #   template:
     #     src: ../templates/smb.conf.j2
@@ -34,11 +35,26 @@
     - name: Install NFS
       ansible.builtin.apt:
         name: nfs-kernel-server
-    - name: Create a plex directory if it does not exist
+    - name: Create a plex directory and assign to nobody:nogroup
       ansible.builtin.file:
-        path: /mnt/plex
+        path: /mnt/disk
         state: directory
+        owner: nobody
+        group: nogroup
         mode: '0755'
+    - name: update /etc/exports
+      ansible.builtin.shell: |
+        # echo "/mnt/disk 10.0.1.0/24(rw,sync,subtree_check)" >> /etc/exports
+        exportfs -a
+    # - name: Mount NFS volumes at boot
+    #   ansible.posix.mount:
+    #     src: 192.168.1.100:/mnt/plex
+    #     path: /mnt/plex
+    #     opts: rw,sync,subtree_check
+    #     boot: true
+    #     state: mounted
+    #     fstype: nfs
+
 
     - name: Install Avahi
       ansible.builtin.apt:
@@ -61,10 +77,10 @@
         state: started
       with_items:
         - 'nfs-kernel-server.service'
-        - 'smbd.service'
+        # - 'smbd.service'
 
     - name: aptitude autoremove
-        ansible.builtin.apt:
-          autoclean: yes
-          autoremove: yes
-          clean: yes
+      ansible.builtin.apt:
+        autoclean: yes
+        autoremove: yes
+        clean: yes
