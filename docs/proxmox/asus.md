@@ -31,17 +31,17 @@ Installed but not sure the value of this:
 - `linux-cpupower`
 - `cpufrequtils`
 - `cpufreqd`
-  ```
-  cat /etc/default/cpufreqd 
+  ```conf
+  cat /etc/default/cpufreqd
   # Cpufreqd startup configuration
-  
+
   # CPU kernel module.
   # Leave empty if you wish to load the modules another way,
   # or if CPUFreq support for your cpu is built in.
   CPUFREQ_CPU_MODULE=""
-  
+
   # Governor modules.
-  # A list separated by spaces. They are needed by cpufreqd 
+  # A list separated by spaces. They are needed by cpufreqd
   # to load your policies. The init script can automatically
   # try to load them. Leave empty to disable loading governor
   # modules at all, use "auto" to let the script do the job.
@@ -50,7 +50,7 @@ Installed but not sure the value of this:
 
 ## Command Outputs
 
-```
+```bash
 # lspci
 00:00.0 Host bridge: Intel Corporation Xeon E3-1200 v5/E3-1500 v5/6th Gen Core Processor Host Bridge/DRAM Registers (rev 07)
 00:02.0 VGA compatible controller: Intel Corporation HD Graphics 530 (rev 06)
@@ -66,33 +66,33 @@ Installed but not sure the value of this:
 01:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller (rev 15)
 ```
 
-```
+```bash
 # lsblk
 NAME                         MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
-sda                            8:0    0 238.5G  0 disk 
-├─sda1                         8:1    0  1007K  0 part 
+sda                            8:0    0 238.5G  0 disk
+├─sda1                         8:1    0  1007K  0 part
 ├─sda2                         8:2    0     1G  0 part /boot/efi
-└─sda3                         8:3    0 237.5G  0 part 
+└─sda3                         8:3    0 237.5G  0 part
   ├─pve-swap                 252:0    0     8G  0 lvm  [SWAP]
   ├─pve-root                 252:1    0  69.4G  0 lvm  /
-  ├─pve-data_tmeta           252:2    0   1.4G  0 lvm  
-  │ └─pve-data-tpool         252:4    0 141.2G  0 lvm  
-  │   ├─pve-data             252:5    0 141.2G  1 lvm  
-  │   ├─pve-vm--100--disk--0 252:6    0    32G  0 lvm  
-  │   ├─pve-vm--101--disk--0 252:7    0     8G  0 lvm  
-  │   └─pve-vm--102--disk--0 252:8    0    16G  0 lvm  
-  └─pve-data_tdata           252:3    0 141.2G  0 lvm  
-    └─pve-data-tpool         252:4    0 141.2G  0 lvm  
-      ├─pve-data             252:5    0 141.2G  1 lvm  
-      ├─pve-vm--100--disk--0 252:6    0    32G  0 lvm  
-      ├─pve-vm--101--disk--0 252:7    0     8G  0 lvm  
-      └─pve-vm--102--disk--0 252:8    0    16G  0 lvm  
-sdb                            8:16   0 238.5G  0 disk 
-└─sdb1                         8:17   0 238.5G  0 part 
-sdc                            8:32   0   1.8T  0 disk 
+  ├─pve-data_tmeta           252:2    0   1.4G  0 lvm
+  │ └─pve-data-tpool         252:4    0 141.2G  0 lvm
+  │   ├─pve-data             252:5    0 141.2G  1 lvm
+  │   ├─pve-vm--100--disk--0 252:6    0    32G  0 lvm
+  │   ├─pve-vm--101--disk--0 252:7    0     8G  0 lvm
+  │   └─pve-vm--102--disk--0 252:8    0    16G  0 lvm
+  └─pve-data_tdata           252:3    0 141.2G  0 lvm
+    └─pve-data-tpool         252:4    0 141.2G  0 lvm
+      ├─pve-data             252:5    0 141.2G  1 lvm
+      ├─pve-vm--100--disk--0 252:6    0    32G  0 lvm
+      ├─pve-vm--101--disk--0 252:7    0     8G  0 lvm
+      └─pve-vm--102--disk--0 252:8    0    16G  0 lvm
+sdb                            8:16   0 238.5G  0 disk
+└─sdb1                         8:17   0 238.5G  0 part
+sdc                            8:32   0   1.8T  0 disk
 ```
 
-```
+```bash
 # lscpu
 Architecture:            x86_64
   CPU op-mode(s):        32-bit, 64-bit
@@ -123,20 +123,20 @@ Vendor ID:               GenuineIntel
                          e3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_dead
                          line_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault
                           invpcid_single pti ibrs ibpb stibp tpr_shadow flexpriority ept vpid ept_a
-                         d fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed 
+                         d fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed
                          adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsaves dtherm arat pl
                          n pts hwp hwp_notify hwp_act_window hwp_epp vnmi
-Virtualization features: 
+Virtualization features:
   Virtualization:        VT-x
-Caches (sum of all):     
+Caches (sum of all):
   L1d:                   128 KiB (4 instances)
   L1i:                   128 KiB (4 instances)
   L2:                    1 MiB (4 instances)
   L3:                    8 MiB (1 instance)
-NUMA:                    
+NUMA:
   NUMA node(s):          1
   NUMA node0 CPU(s):     0-7
-Vulnerabilities:         
+Vulnerabilities:
   Gather data sampling:  Vulnerable: No microcode
   Itlb multihit:         KVM: Mitigation: VMX disabled
   L1tf:                  Mitigation; PTE Inversion; VMX conditional cache flushes, SMT vulnerable
@@ -163,7 +163,7 @@ Removing the GT 750 seemed to solve the problem. Not sure if it was:
 - driver was doing something
 - things got worse after bios upgrade, tempted to think it was tied to that
 
-```
+```bash
 # sensors
 coretemp-isa-0000
 Adapter: ISA adapter
@@ -181,7 +181,7 @@ temp2:        +29.8°C  (crit = +119.0°C)
 
 Fans are quiet while:
 
-```
+```bash
 # cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
 performance
 performance
@@ -193,8 +193,8 @@ performance
 performance
 ```
 
-```
-# cat /etc/default/cpufreqd 
+```conf
+# cat /etc/default/cpufreqd
 # Cpufreqd startup configuration
 
 # CPU kernel module.
@@ -203,7 +203,7 @@ performance
 CPUFREQ_CPU_MODULE=""
 
 # Governor modules.
-# A list separated by spaces. They are needed by cpufreqd 
+# A list separated by spaces. They are needed by cpufreqd
 # to load your policies. The init script can automatically
 # try to load them. Leave empty to disable loading governor
 # modules at all, use "auto" to let the script do the job.

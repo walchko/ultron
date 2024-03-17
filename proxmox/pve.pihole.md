@@ -94,7 +94,7 @@ server:
 
 Add to `/etc/dnsmasq.d/99-edns.conf`:
 
-```
+```conf
 edns-packet-max=1232
 ```
 
@@ -126,10 +126,10 @@ sudo service unbound restart
 
 ## Black and White Lists
 
-```
+```bash
 pihole -w mparticle.weather.com
-pihole --regex [0-9a-zA-Z\-\.]+tiktok[0-9a-zA-Z\-\.]+
-pihole --regex (\.|^)litix\.io$
+pihole --regex "[0-9a-zA-Z\-\.]+tiktok[0-9a-zA-Z\-\.]+"
+pihole --regex "(\.|^)litix\.io$"
 ```
 ## AdLists
 
@@ -146,6 +146,25 @@ https://v.firebog.net/hosts/Admiral.txt
 https://v.firebog.net/hosts/static/w3kbl.txt
 ```
 
+## Multiple DNS
+
+
+`/etc/dnsmasq.d/02-pihole-dhcp.conf`:
+```conf
+dhcp-option=6,Pi-holeIP,SecondaryDNSIP
+```
+```bash
+sudo service pihole-FTL restart
+```
+
+You would have to renew release on each host after that to pull the new settings.
+
+Consider running tests with namebench with various combination of DNS servers. Set the fastest one in pi-Hole and a slightly slower one in your secondary DNS resolver (i'm assuming it's your router). I am only talking milliseconds here based on the namebench results.
+
+[Ref](https://discourse.pi-hole.net/t/secondary-dns-server-for-dhcp/1874/4)
+[Ref](https://www.reddit.com/r/pihole/comments/pzkxnp/secondary_dns_server_in_dhcp_settings/)
+
+---
 
 ## Unattended Install - Not Sure This Works
 
