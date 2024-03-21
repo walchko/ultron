@@ -104,6 +104,11 @@ Edit the samba config `/etc/samba/smb.conf`:
 ```bash
 sudo systemctl restart smbd.service
 sudo systemctl restart nmbd.service
+
+# or
+
+sudo service smbd restart
+sudo service nmbd restart
 ```
 
 ---
@@ -112,6 +117,10 @@ sudo systemctl restart nmbd.service
 # not sure you need to do this
 # smbpasswd -a [username]
 ```
+
+## Setup Time Machine Support
+
+[samba time machine support](./time_machine_samba.md)
 
 ## Setup Firewall
 

@@ -30,8 +30,8 @@ Datacenter
 - In `proxmox` -> `container` -> `options` -> `features` check NFS and now you should see `mount=nfs`
 - Create mount point
   - `mkdir /mnt/nfs`
-  - edit `/etc/fstab` and add `<nas_ipaddr>:/<share> /mnt/nfs nfs defaults 0 0`
-    - `1.2.3.4:/mnt/nfs /mnt/nfs nfs defaults 0 0`
+  - edit `/etc/fstab` and add `<nas_ipaddr>:/<share> /mnt/nfs nfs defaults 0 2`
+    - `1.2.3.4:/mnt/nfs /mnt/nfs nfs defaults 0 2`
 - `mount -a`
 
 # References

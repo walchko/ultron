@@ -51,7 +51,7 @@ mkdir -p /mnt/backup/time-machine
 
 # fix permissions
 chown tm:tm -R /mnt/backup/time-machine
-chown og-rwx -R /mnt/backup/time-mahcine
+chmod og-rwx -R /mnt/backup/time-mahcine
 
 # update AFP config
 tee -a /etc/netatalk/afp.conf << EOF
