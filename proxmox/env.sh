@@ -5,33 +5,6 @@
 
 source <(curl -s https://raw.githubusercontent.com/walchko/ultron/master/proxmox/source_me.sh)
 
-# ESC="\033"
-# RED="$ESC[31m"
-# GREEN="$ESC[32m"
-# YELLOW="$ESC[93m"
-# BLUE="$ESC[34m"
-# MAGENTA="$ESC[35m"
-# CYAN="$ESC[36m"
-# RESET="$ESC[39m"
-
-# status () {
-#     echo -e "$1 $2 ${RESET}"
-# }
-
-# append () {
-#     line=$1
-#     file=$2
-
-#     grep -Fxq "$line" $file
-#     ret_code=$? # capture return code
-#     if [[ "$ret_code" == "0" ]]; then
-#         status $CYAN "ALREADY Done: ${line} >> ${file}"
-#     else
-#         echo "${line}" | tee -a $file > /dev/null
-#         status $GREEN "UPDATED ${file} with ${line}"
-#     fi
-# }
-
 # Install packages
 # original PS1=${debian_chroot:+($debian_chroot)}\u@\h:\w\$
 PKGS="avahi-daemon tree"
