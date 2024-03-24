@@ -11,7 +11,6 @@ status $GREEN "me: ${ME}"
 # Install packages
 # original PS1=${debian_chroot:+($debian_chroot)}\u@\h:\w\$
 PKGS="avahi-daemon tree"
-# if [[ "${USER}" == "root" ]]; then
 if [[ "${ME}" == "0" ]]; then
     # red
     CB="\033[1;91m"
