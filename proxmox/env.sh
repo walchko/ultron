@@ -5,6 +5,9 @@
 
 source <(curl -s https://raw.githubusercontent.com/walchko/ultron/master/proxmox/source_me.sh)
 
+ME=`id -u`
+status $GREEN "me: ${ME}"
+
 # Install packages
 # original PS1=${debian_chroot:+($debian_chroot)}\u@\h:\w\$
 PKGS="avahi-daemon tree"
