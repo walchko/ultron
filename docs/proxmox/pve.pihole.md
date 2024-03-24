@@ -2,6 +2,8 @@
 
 # Pi Hole on Proxmox
 
+[Install script for Proxmox](../../proxmox/pihole.sh)
+
 ```bash
 apt update && upgrade -y
 apt install curl htop -y
@@ -214,4 +216,5 @@ CACHE_SIZE=10000
 
 - [ansible pihole](https://codeberg.org/ansible/pihole)
 - [Recursive DNS with Unbound](https://docs.pi-hole.net/guides/dns/unbound/)
+- [youtube video of PiHole in LXC](https://www.youtube.com/watch?v=k0TwkSwLYWA)
 - [PiHole on Proxmox](https://www.naturalborncoder.com/linux/2023/07/12/installing-pi-hole-on-proxmox/)

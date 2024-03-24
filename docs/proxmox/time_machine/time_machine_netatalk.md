@@ -5,6 +5,9 @@
 > **WARNING:** It appears Samba has issues with time machine, but
 > people have success with netatalk.
 
+> **WARNING:** It appears Apple has stopped supporting netatalk
+> so you HAVE to use SAMBA ... confused????
+
 ## Debian 12 and Samba Issues
 
 - `netatalk` is not available, use Debian 11

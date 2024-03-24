@@ -1,11 +1,37 @@
 #!/bin/bash
 # MIT License Kevin Walchko (c) 2024
 
+ESC="\033"
+RED="$ESC[31m"
+GREEN="$ESC[32m"
+YELLOW="$ESC[93m"
+MAGENTA="$ESC[35m"
+CYAN="$ESC[36m"
+RESET="$ESC[39m"
+
+status () {
+    echo -e "$1 $2 ${RESET}"
+}
+
 # check if we are root
 if [[ "${EUID}" != "0" || "${USER}" != "root" ]]; then
-    echo "Please run as root"
+    status $RED "Please run as root"
     exit 1
 fi
+
+append () {
+    line=$1
+    file=$2
+
+    grep -Fxq "$line" $file
+    ret_code=$? # capture return code
+    if [[ "$ret_code" == "0" ]]; then
+        echo -e "${CYAN}ALREADY Done: ${line} >> ${file}${RESET}"
+    else
+        echo "${line}" | tee -a $file > /dev/null
+        echo -e "${GREEN}UPDATED ${file} with ${line}${RESET}"
+    fi
+}
 
 cat << "EOF"
  _____ _ _        ____                             ___           _        _ _
@@ -20,7 +46,7 @@ EOF
 apt update && apt upgrade -y
 
 # NFS --------------------------------
-echo "NFS Install"
+status $YELLOW "NFS Install"
 apt install nfs-kernel-server -y
 systemctl start nfs-kernel-server
 systemctl enable nfs-kernel-server
@@ -29,17 +55,23 @@ mkdir /mnt/nfs -p
 chown nobody:nogroup -R /mnt/nfs
 chmod 755 /mnt/nfs
 
-echo "/mnt/nfs 10.0.1.0/24(rw,sync,no_subtree_check)" >> /etc/exports
+# echo "/mnt/nfs 10.0.1.0/24(rw,sync,no_subtree_check)" >> /etc/exports
+append "/mnt/nfs 10.0.1.0/24(rw,sync,no_subtree_check)" /etc/exports
 exportfs -a
 systemctl restart nfs-kernel-server
 
 # SMB --------------------------------
-echo "Samba Install"
+status $YELLOW "Samba Install"
 apt install samba samba-common samba-common-bin cifs-utils python3-pexpect -y
 
-mv /etc/samba/smb.conf /etc/samba/smb.conf.bak
+grep -Fxq "[nfs]" /etc/samba/smb.conf
+ret_code=$?
+if [[ "$ret_code" == "0" ]]; then
+    status $CYAN "smb.conf already setup for /mnt/nfs"
+else
+    mv /etc/samba/smb.conf /etc/samba/smb.conf.bak
 
-cat << EOF > /etc/samba/smb.conf
+    cat << EOF > /etc/samba/smb.conf
 [global]
    workgroup = WORKGROUP
    wins support = yes
@@ -72,10 +104,11 @@ cat << EOF > /etc/samba/smb.conf
    path = /mnt/nfs
    guest ok = yes
 EOF
+fi
 
 service smbd restart
 service nmbd restart
 
 # NFS
-echo "NFS versions:"
-cat /proc/fs/nfsd/versions
+NFS_VERS=`cat /proc/fs/nfsd/versions`
+status $CYAN "NFS versions: ${NFS_VERS}"

@@ -2,8 +2,12 @@
 
 > **WARNING:** Apple appears to have deprecated afp in favor of smb.
 > Although I appear to be able to setup something using `netatalk`,
-> the backups don't appear to be valid (macOS 30GB in size, but
-> in linux only 4Kb in size).
+> the backups don't appear to be valid.
+
+> **WARNING:** This didn't work either. Time machine couldn't reverse
+> through time and show changes. It was just stuck on "now". The backup
+> appeared to be the correct size, but something is wrong with the
+> sparse bundle
 
 ```conf
 # cat /etc/samba/smb.conf

@@ -33,7 +33,7 @@ Proxmox Virtual Environment is a complete, open-source server management platfor
 
 ## `fstab`
 
-```
+```bash
 # cat /etc/fstab
 
 # <file system> <mount point> <type> <options> <dump> <pass>
@@ -45,42 +45,65 @@ proc /proc proc defaults 0 0
 
 # Post Install Configuration
 
-## Avahi Setup
+## `apt`
 
-```
-apt install avahi-daemon
-```
-
-## Sensors
-
-```
-apt install hddtemp lm-sensors
+```bash
+apt update && apt upgrade -y
+apt install avahi-daemon lm-sensors duf tree
 ```
 
+```bash
+# not sure this is really useful
+apt install cpufreqd
 ```
-# sensors
-coretemp-isa-0000
-Adapter: ISA adapter
-Package id 0:  +31.0°C  (high = +84.0°C, crit = +100.0°C)
-Core 0:        +29.0°C  (high = +84.0°C, crit = +100.0°C)
-Core 1:        +28.0°C  (high = +84.0°C, crit = +100.0°C)
-Core 2:        +28.0°C  (high = +84.0°C, crit = +100.0°C)
-Core 3:        +27.0°C  (high = +84.0°C, crit = +100.0°C)
-
-acpitz-acpi-0
-Adapter: ACPI interface
-temp1:        +27.8°C  (crit = +119.0°C)
-temp2:        +29.8°C  (crit = +119.0°C)
-
-nouveau-pci-0100
-Adapter: PCI adapter
-GPU core:    900.00 mV (min =  +0.88 V, max =  +1.08 V)
-temp1:        +45.0°C  (high = +95.0°C, hyst =  +3.0°C)
-                       (crit = +105.0°C, hyst =  +5.0°C)
-                       (emerg = +135.0°C, hyst =  +5.0°C)
+```bash
+# shows hardware power status and c-states
+# not sure how useful it is yet ... still learning
+apt install powertop
 ```
 
-[displaying in proxmox](https://www.reddit.com/r/homelab/comments/rhq56e/displaying_cpu_temperature_in_proxmox_summery_in/)
+> **WARNING:** You will get `apt` errors in your task logs. This is because in the middle of
+> the night, updates will fail. To fix this, in `/etc/apt/source.list.d/` remove both
+> `ceph.list` and `pve-enterprise.list` and the no subscription repo, then do a `apt update`.
+
+```conf
+# /etc/apt/sources.list.d/pve-enterprise.list
+deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription
+```
+
+- [displaying in proxmox](https://www.reddit.com/r/homelab/comments/rhq56e/displaying_cpu_temperature_in_proxmox_summery_in/)
+- [no subscription repo](https://pve.proxmox.com/wiki/Package_Repositories)
+
+## `powertop`
+
+TBD
+
+## `cpufreqd`
+
+> **WARNING:** Installed but not sure the value of this, but maybe it
+> keeps the fans quiet?
+
+- `cpufreqd`
+  ```conf
+  cat /etc/default/cpufreqd
+  # Cpufreqd startup configuration
+
+  # CPU kernel module.
+  # Leave empty if you wish to load the modules another way,
+  # or if CPUFreq support for your cpu is built in.
+  CPUFREQ_CPU_MODULE=""
+
+  # Governor modules.
+  # A list separated by spaces. They are needed by cpufreqd
+  # to load your policies. The init script can automatically
+  # try to load them. Leave empty to disable loading governor
+  # modules at all, use "auto" to let the script do the job.
+  CPUFREQ_GOV_MODULES="auto"
+  ```
+
+## C-States
+
+[CPU Power Management](https://metebalci.com/blog/a-minimum-complete-tutorial-of-cpu-power-management-c-states-and-p-states/)
 
 ## Wake-on-LAN
 
@@ -105,105 +128,11 @@ Directions [here](https://www.youtube.com/watch?v=qlcVx-k-02E)
     - supports Let's Encrypt `DNS-01` verification
       - create wildcard certs for other services
 
-## Reduce Power
-
-### cpufrequtils
-
-```
-DIDN'T WORK
-# Ref: https://forum.proxmox.com/threads/fix-always-high-cpu-frequency-in-proxmox-host.84270/
-# Ref: https://wiki.archlinux.org/title/CPU_frequency_scaling
-## cpu scaling
-# proxmox uses performance by default change to powersave to enable cpu scaling
-# cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
-apt install cpufrequtils
-
-cat << 'EOF' > /etc/default/cpufrequtils
-GOVERNOR="powersave"
-EOF
-```
-
-### cpupower
-
-```
-# cpupower -c all frequency-set -g powersave
-Setting cpu: 0
-Setting cpu: 1
-Setting cpu: 2
-Setting cpu: 3
-Setting cpu: 4
-Setting cpu: 5
-Setting cpu: 6
-Setting cpu: 7
-root@proxmox:~# cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
-powersave
-powersave
-powersave
-powersave
-powersave
-powersave
-powersave
-powersave
-```
-
-```
-# cpupower frequency-info
-analyzing CPU 0:
-  driver: intel_pstate
-  CPUs which run at the same hardware frequency: 0
-  CPUs which need to have their frequency coordinated by software: 0
-  maximum transition latency:  Cannot determine or is not supported.
-  hardware limits: 800 MHz - 3.40 GHz
-  available cpufreq governors: performance powersave
-  current policy: frequency should be within 800 MHz and 3.40 GHz.
-                  The governor "powersave" may decide which speed to use
-                  within this range.
-  current CPU frequency: Unable to call hardware
-  current CPU frequency: 800 MHz (asserted by call to kernel)
-  boost state support:
-    Supported: no
-    Active: no
-```
-
-### linux
-
-Double check which states are valid:
-
-```
-# cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors
-performance powersave
-```
-
-Other systems might have other modes, but mine has these two. You should be able to 
-put the system into `powersave` or `performance`.
-
-```
-# echo "powersave" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
-powersave
-
-# cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
-powersave
-powersave
-powersave
-powersave
-powersave
-powersave
-powersave
-powersave
-```
-
-- [home assistant and proxmox](https://community.home-assistant.io/t/psa-how-to-configure-proxmox-for-lower-power-usage/323731/4)
-
-# Services to Host
-
-- [Paperless](https://github.com/paperless-ngx/paperless-ngx) document database ([tutorial](https://www.youtube.com/watch?v=uT9Q5WdBGos&t=687s))
-- [OpnSense](https://opnsense.org) firewall
-
 ## Show running services
 
-```
+```bash
 # systemctl list-units --type=service --state=running
-  UNIT                     LOAD   ACTIVE SUB     DESCRIPTION 
+  UNIT                     LOAD   ACTIVE SUB     DESCRIPTION
   avahi-daemon.service     loaded active running Avahi mDNS/DNS-SD Stack
   chrony.service           loaded active running chrony, an NTP client/server
   cpufreqd.service         loaded active running LSB: start and stop cpufreqd

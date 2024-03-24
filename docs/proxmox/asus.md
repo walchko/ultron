@@ -25,29 +25,6 @@
   - Fan 1 `disabled` ❌
   - Fan 2 `motherboard` `enabled` ✅
 
-## `apt`
-
-Installed but not sure the value of this:
-- `linux-cpupower`
-- `cpufrequtils`
-- `cpufreqd`
-  ```conf
-  cat /etc/default/cpufreqd
-  # Cpufreqd startup configuration
-
-  # CPU kernel module.
-  # Leave empty if you wish to load the modules another way,
-  # or if CPUFreq support for your cpu is built in.
-  CPUFREQ_CPU_MODULE=""
-
-  # Governor modules.
-  # A list separated by spaces. They are needed by cpufreqd
-  # to load your policies. The init script can automatically
-  # try to load them. Leave empty to disable loading governor
-  # modules at all, use "auto" to let the script do the job.
-  CPUFREQ_GOV_MODULES="auto"
-  ```
-
 ## Command Outputs
 
 ```bash
@@ -179,33 +156,4 @@ temp1:        +27.8°C  (crit = +119.0°C)
 temp2:        +29.8°C  (crit = +119.0°C)
 ```
 
-Fans are quiet while:
 
-```bash
-# cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
-performance
-performance
-performance
-performance
-performance
-performance
-performance
-performance
-```
-
-```conf
-# cat /etc/default/cpufreqd
-# Cpufreqd startup configuration
-
-# CPU kernel module.
-# Leave empty if you wish to load the modules another way,
-# or if CPUFreq support for your cpu is built in.
-CPUFREQ_CPU_MODULE=""
-
-# Governor modules.
-# A list separated by spaces. They are needed by cpufreqd
-# to load your policies. The init script can automatically
-# try to load them. Leave empty to disable loading governor
-# modules at all, use "auto" to let the script do the job.
-CPUFREQ_GOV_MODULES="auto"
-```
