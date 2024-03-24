@@ -35,7 +35,7 @@ check_linux () {
 }
 
 check_root () {
-    if [[ "${UID}" != "0" || "${USER}" != "root" ]]; then
+    if [[ "${USER}" != "root" ]]; then
         status $RED "ERROR: Please run as root"
         exit 1
     fi
