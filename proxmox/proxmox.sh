@@ -1,5 +1,7 @@
 #!/bin/bash
 
+GIT="https://raw.githubusercontent.com/walchko/ultron/master/proxmox"
+
 ESC="\033"
 RED="$ESC[31m"
 GREEN="$ESC[32m"
@@ -26,19 +28,19 @@ fi
 #     exit 1
 # fi
 
-append () {
-    line=$1
-    file=$2
+# append () {
+#     line=$1
+#     file=$2
 
-    grep -Fxq "$line" $file
-    ret_code=$? # capture return code
-    if [[ "$ret_code" == "0" ]]; then
-        echo -e "${CYAN}ALREADY Done: ${line} >> ${file}${RESET}"
-    else
-        echo "${line}" | tee -a $file > /dev/null
-        echo -e "${GREEN}UPDATED ${file} with ${line}${RESET}"
-    fi
-}
+#     grep -Fxq "$line" $file
+#     ret_code=$? # capture return code
+#     if [[ "$ret_code" == "0" ]]; then
+#         echo -e "${CYAN}ALREADY Done: ${line} >> ${file}${RESET}"
+#     else
+#         echo "${line}" | tee -a $file > /dev/null
+#         echo -e "${GREEN}UPDATED ${file} with ${line}${RESET}"
+#     fi
+# }
 
 # echo "Setup Proxmox"
 cat << "EOF"
@@ -69,12 +71,13 @@ apt update && apt upgrade -y
 apt install avahi-daemon lm-sensors duf tree htop
 status $YELLOW "==> Updated and installed software"
 
-# Fix command line
-append 'alias ls="ls --color -h"' ~/.bashrc
-append 'alias systemctl="systemctl --no-pager"' ~/.bashrc
-append 'alias systemctl-running="systemctl list-units --type=service --state=running"' ~/.bashrc
-append 'alias df="df -Th"' ~/.bashrc
-status $YELLOW "==> Updated ~/.bashrc"
+# # Fix command line
+# append 'alias ls="ls --color -h"' ~/.bashrc
+# append 'alias systemctl="systemctl --no-pager"' ~/.bashrc
+# append 'alias systemctl-running="systemctl list-units --type=service --state=running"' ~/.bashrc
+# append 'alias df="df -Th"' ~/.bashrc
+# status $YELLOW "==> Updated ~/.bashrc"
+curl -sSL "${GIT}/env.sh" | bash
 
 
 

@@ -3,17 +3,45 @@
 # script.sh <nfs_share>
 # nfs_share ex: 1.2.3.4:/folder
 
+GIT="https://raw.githubusercontent.com/walchko/ultron/master/proxmox"
+
+ESC="\033"
+RED="$ESC[31m"
+GREEN="$ESC[32m"
+YELLOW="$ESC[93m"
+MAGENTA="$ESC[35m"
+CYAN="$ESC[36m"
+RESET="$ESC[39m"
+
+status () {
+    echo -e "$1 $2 ${RESET}"
+}
+
+append () {
+    line=$1
+    file=$2
+
+    grep -Fxq "$line" $file
+    ret_code=$? # capture return code
+    if [[ "$ret_code" == "0" ]]; then
+        status $CYAN "ALREADY Done: ${line} >> ${file}"
+    else
+        echo "${line}" | tee -a $file > /dev/null
+        status $GREEN "UPDATED ${file} with ${line}"
+    fi
+}
+
 # check if we are root
 if [[ "${EUID}" != "0" || "${USER}" != "root" ]]; then
-    echo "Please run as root"
+    status $RED "ERROR: Please run as root"
     exit 1
 fi
 
 if [[ $# -eq 1 ]]; then
     NFS_SHARE=$1
 else
-    echo "ERROR: script.sh <nfs_share>"
-    echo "       nfs_share ex: 1.2.3.4:/folder"
+    status $RED "ERROR: script.sh <nfs_share>"
+    status $RED "       nfs_share ex: 1.2.3.4:/folder"
     exit 1
 fi
 
@@ -36,8 +64,11 @@ echo "deb [signed-by=/usr/share/keyrings/plex.gpg] https://downloads.plex.tv/rep
 apt update
 apt install plexmediaserver -y
 
-mkdir /mnt/nfs -p
+mkdir -p /mnt/nfs
 # chown nobody:nogroup -R /mnt/nfs
 
-echo "${NFS_SHARE} /mnt/nfs nfs defaults 0 2" >> /etc/fstab
+append "${NFS_SHARE} /mnt/nfs nfs defaults 0 2" /etc/fstab
 mount -a
+
+# Fix command line
+curl -sSL "${GIT}/env.sh" | bash
