@@ -25,7 +25,7 @@ else
 fi
 
 # Fix command line
-append "export PS1='${CB}\u@\h:${C}\w\$ \033[0m'" ~/.bashrc
+append "export PS1='${debian_chroot:+($debian_chroot)}${CB}\u@\h:${C}\w\$ \033[0m'" ~/.bashrc
 append 'alias ls="ls --color -h"' ~/.bashrc
 append 'alias systemctl="systemctl --no-pager"' ~/.bashrc
 append 'alias systemctl-running="systemctl list-units --type=service --state=running"' ~/.bashrc
