@@ -12,7 +12,7 @@ status $GREEN "me: ${ME}"
 # original PS1=${debian_chroot:+($debian_chroot)}\u@\h:\w\$
 PKGS="avahi-daemon tree"
 # if [[ "${USER}" == "root" ]]; then
-if [[ `id -u` == "0" ]]; then
+if [[ "${ME}" == "0" ]]; then
     # red
     CB="\033[1;91m"
     C="\033[0;31m"
