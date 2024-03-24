@@ -35,7 +35,7 @@ source <(curl -s https://raw.githubusercontent.com/walchko/ultron/master/proxmox
 # Install packages
 # original PS1=${debian_chroot:+($debian_chroot)}\u@\h:\w\$
 PKGS="avahi-daemon tree"
-if [[ "${UID}" == "0" || "${USER}" == "root" ]]; then
+if [[ "${USER}" == "root" ]]; then
     # red
     CB="\033[1;91m"
     C="\033[0;31m"
