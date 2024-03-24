@@ -18,13 +18,13 @@ if [[ "${ME}" == "0" ]]; then
     C="\033[0;31m"
     # append "export PS1='${CB}\u@\h:${C}\w\$ \033[0m'" ~/.bashrc
 
-    apt install $PKGS
+    apt install $PKGS -y
 else
     # blue
     CB="\033[1;94m"
     C="\033[0;34m"
 
-    sudo apt install $PKGS
+    sudo apt install $PKGS -y
 fi
 
 # Fix command line
