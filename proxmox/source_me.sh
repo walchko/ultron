@@ -22,7 +22,7 @@ append () {
 
     grep -Fxq "$line" $file
     ret_code=$? # capture return code
-    if [[ "$ret_code" == "0" ]]; then
+    if [ "$ret_code" == "0" ]; then
         status $CYAN "ALREADY Done: ${line} >> ${file}"
     else
         echo "${line}" | tee -a $file > /dev/null
@@ -31,11 +31,11 @@ append () {
 }
 
 check_linux () {
-    if [[ `uname` != "Linux"]]; then exit 1; fi
+    if [ `uname` != "Linux" ]; then exit 1; fi
 }
 
 check_root () {
-    if [[ "${USER}" != "root" ]]; then
+    if [ "${USER}" != "root" ]; then
         status $RED "ERROR: Please run as root"
         exit 1
     fi
