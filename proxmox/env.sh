@@ -5,13 +5,13 @@
 
 source <(curl -s https://raw.githubusercontent.com/walchko/ultron/master/proxmox/source_me.sh)
 
-ME=`id -u`
-status $GREEN "me: ${ME}"
+#ME=`id -u`
+#status $GREEN "me: ${ME}"
 
 # Install packages
 # original PS1=${debian_chroot:+($debian_chroot)}\u@\h:\w\$
 PKGS="avahi-daemon tree"
-if [[ "${ME}" == "0" ]]; then
+if [ `id -u` == "0" ]]; then
     # red
     CB="\033[1;91m"
     C="\033[0;31m"
@@ -32,5 +32,5 @@ append 'alias ls="ls --color -h"' ~/.bashrc
 append 'alias systemctl="systemctl --no-pager"' ~/.bashrc
 append 'alias systemctl-running="systemctl list-units --type=service --state=running"' ~/.bashrc
 append 'alias df="df -Th"' ~/.bashrc
-append 'export EDITOR=nano'
+append 'export EDITOR=nano' ~/.bashrc
 status $YELLOW "==> Updated ~/.bashrc"
