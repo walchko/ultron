@@ -1,5 +1,6 @@
 #!/bin/bash
 # MIT License Kevin Walchko (c) 2024
+#
 # script.sh <nfs_share>
 # nfs_share ex: 1.2.3.4:/folder
 
@@ -71,4 +72,6 @@ append "${NFS_SHARE} /mnt/nfs nfs defaults 0 2" /etc/fstab
 mount -a
 
 # Fix command line
-curl -sSL "${GIT}/env.sh" | bash
+curl -sSL "${GIT}/env.sh" | /bin/bash
+
+print_done

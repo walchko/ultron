@@ -1,17 +1,17 @@
 #!/bin/bash
 # MIT License Kevin Walchko (c) 2024
+#
 # script.sh <password>
 
-# check if we are root
-if [[ "${EUID}" != "0" || "${USER}" != "root" ]]; then
-    echo "Please run as root"
-    exit 1
-fi
+source <(curl -s https://raw.githubusercontent.com/walchko/ultron/master/proxmox/source_me.sh)
 
-if [[ $# -eq 1 ]]; then
+fail_not_linux
+fail_not_root
+
+if [ $# -eq 1 ]; then
     PASSWD=$1
 else
-    echo "ERROR: script.sh <password>"
+    status $RED "ERROR: pihole.sh <password>"
     exit 1
 fi
 
@@ -25,11 +25,31 @@ cat << "EOF"
 EOF
 
 apt update && apt upgrade -y
-apt install curl htop unbound -y
-curl -sSL https://install.pi-hole.net | bash
+apt install curl -y
+
+# Fix command line
+curl -sSL "${GIT}/env.sh" | /bin/bash
+
+# setup PiHole
+curl -sSL https://install.pi-hole.net | /bin/bash
 
 pihole -a -p $PASSWD
 pihole -a -f
+pihole -w mparticle.weather.com
+pihole --regex "[0-9a-zA-Z\-\.]+tiktok[0-9a-zA-Z\-\.]+"
+pihole --regex "(\.|^)litix\.io$"
+
+# update local dns records?
+# /etc/pihole/custom.list
+
+echo "==================================="
+echo " Setup CUSTOM DNS1: 127.0.0.1#5335"
+echo "==================================="
+
+status $YELLOW "==> Setup PiHole"
+
+# setup unbound
+apt install unbound -y
 
 cat << EOF > /etc/unbound/unbound.conf.d/pi-hole.conf
 server:
@@ -106,10 +126,9 @@ EOF
 
 service unbound restart
 
-pihole -w mparticle.weather.com
-pihole --regex "[0-9a-zA-Z\-\.]+tiktok[0-9a-zA-Z\-\.]+"
-pihole --regex "(\.|^)litix\.io$"
+status $YELLOW "==> Setup Unbound"
 
-echo "==================================="
-echo "Setup CUSTOM DNS1: 127.0.0.1#5335"
-echo "==================================="
+# Fix command line
+curl -sSL "${GIT}/env.sh" | /bin/bash
+
+print_done

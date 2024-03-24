@@ -1,37 +1,10 @@
 #!/bin/bash
 # MIT License Kevin Walchko (c) 2024
 
-ESC="\033"
-RED="$ESC[31m"
-GREEN="$ESC[32m"
-YELLOW="$ESC[93m"
-MAGENTA="$ESC[35m"
-CYAN="$ESC[36m"
-RESET="$ESC[39m"
+source <(curl -s https://raw.githubusercontent.com/walchko/ultron/master/proxmox/source_me.sh)
 
-status () {
-    echo -e "$1 $2 ${RESET}"
-}
-
-# check if we are root
-if [[ "${EUID}" != "0" || "${USER}" != "root" ]]; then
-    status $RED "Please run as root"
-    exit 1
-fi
-
-append () {
-    line=$1
-    file=$2
-
-    grep -Fxq "$line" $file
-    ret_code=$? # capture return code
-    if [[ "$ret_code" == "0" ]]; then
-        echo -e "${CYAN}ALREADY Done: ${line} >> ${file}${RESET}"
-    else
-        echo "${line}" | tee -a $file > /dev/null
-        echo -e "${GREEN}UPDATED ${file} with ${line}${RESET}"
-    fi
-}
+fail_not_linux
+fail_not_root
 
 cat << "EOF"
  _____ _ _        ____                             ___           _        _ _
@@ -66,7 +39,7 @@ apt install samba samba-common samba-common-bin cifs-utils python3-pexpect -y
 
 grep -Fxq "[nfs]" /etc/samba/smb.conf
 ret_code=$?
-if [[ "$ret_code" == "0" ]]; then
+if [ "$ret_code" == "0" ]; then
     status $CYAN "smb.conf already setup for /mnt/nfs"
 else
     mv /etc/samba/smb.conf /etc/samba/smb.conf.bak
@@ -112,3 +85,8 @@ service nmbd restart
 # NFS
 NFS_VERS=`cat /proc/fs/nfsd/versions`
 status $CYAN "NFS versions: ${NFS_VERS}"
+
+# Fix command line
+curl -sSL "${GIT}/env.sh" | /bin/bash
+
+print_done
