@@ -10,7 +10,7 @@ YELLOW="$ESC[93m"
 BLUE="$ESC[34m"
 MAGENTA="$ESC[35m"
 CYAN="$ESC[36m"
-RESET="$ESC[39m"
+RESET="$ESC[0m"
 
 status () {
     echo -e "$1 $2 ${RESET}"
@@ -35,7 +35,7 @@ check_linux () {
 }
 
 check_root () {
-    if [[ "${EUID}" != "0" || "${USER}" != "root" ]]; then
+    if [[ "${UID}" != "0" || "${USER}" != "root" ]]; then
         status $RED "ERROR: Please run as root"
         exit 1
     fi
