@@ -1,4 +1,43 @@
-# New HD LVM-Thin
+# Install Hard Drive or SSD
+
+## Get Serial Number
+
+`/dev/sdc` has SN `S1RKNSAF702352` which I shorten the drive name
+to `ssd-352`
+
+```bash
+# smartctl -i /dev/sdc
+
+smartctl 7.3 2022-02-28 r5338 [x86_64-linux-6.8.12-5-pve] (local build)
+Copyright (C) 2002-22, Bruce Allen, Christian Franke, www.smartmontools.org
+
+=== START OF INFORMATION SECTION ===
+Model Family:     Samsung based SSDs
+Device Model:     SAMSUNG MZ7TE256HMHP-00004
+Serial Number:    S1RKNSAF702352
+LU WWN Device Id: 5 002538 8a056d317
+Firmware Version: EXT0200Q
+User Capacity:    256,060,514,304 bytes [256 GB]
+Sector Size:      512 bytes logical/physical
+Rotation Rate:    Solid State Device
+TRIM Command:     Available
+Device is:        In smartctl database 7.3/5319
+ATA Version is:   ACS-2, ATA8-ACS T13/1699-D revision 4c
+SATA Version is:  SATA 3.1, 6.0 Gb/s (current: 6.0 Gb/s)
+Local Time is:    Mon Dec 30 14:17:26 2024 MST
+SMART support is: Available - device has SMART capability.
+SMART support is: Enabled
+```
+
+# New Directory Storage
+
+1. `Datacenter` -> `Storage` -> `Add` -> `Directory`
+1. Give it a name, `ssd-352` in this case
+1. Give it a mount point, `/mnt/bindmounts/share_256G` in this case
+
+> Double check `/etc/fstab` has the info, if not, add it like below
+
+# New HD LVM-Thin Storage
 
 > **WARNING:** There appears to be concern over data loss on thin
 > drives if power is suddenly lost. LVM drives seem to retain data
@@ -13,7 +52,7 @@ Web admin:
 1. `proxmox` host -> Disks -> LVM-Thin -> Create: Thinpool
     - This will set up the disk and reserve 16GB for metadata pool
 
-## Format HD LVM-Thin
+## Format HD LVM-Thin Storage
 
 `lsblk -f` (this is *after* I partitioned and formatted):
 
