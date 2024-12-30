@@ -92,7 +92,7 @@ I would do it this way:
 
 1. create that mountpoint first: `mkdir /mnt/backupHDD`
 1. find out the `UUID` or `PARTUUID` of the partition of your backup disk.
-   In the case of sda1: `blkid | grep sda1 | grep UUID=`
+   In the case of sda1: `blkid | grep sda1 | grep PARTUUID=`
 1. edit fstab: `nano /etc/fstab`, add something like this there in case you
    found a `PARTUUID`:
   ```
