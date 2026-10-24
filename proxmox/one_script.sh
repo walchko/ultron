@@ -117,10 +117,10 @@ MEM_FREE=`free -h | grep "Mem" | awk '{print $4}'`
 #IPLAN=`ip -4 -o addr list eth0 | awk '{print $4}' | cut -d/ -f1`
 IPLAN=`hostname -I`
 
-DF=`df -Th | grep /dev/loop | awk '{print $3 }'`
-DF_FREE=`df -Th | grep /dev/loop | awk '{print $5 }'`
-DF_PER=`df -Th | grep /dev/loop | awk '{print $6 }'`
-DF_TYPE=`df -Th | grep /dev/loop | awk '{print $2 }'`
+DF=`df -Th -t ext4 | grep / | awk '{print $3 }'`
+DF_FREE=`df -Th -t ext4 | grep / | awk '{print $5 }'`
+DF_PER=`df -Th -t ext4 | grep / | awk '{print $6 }'`
+DF_TYPE=`df -Th -t ext4 | grep / | awk '{print $2 }'`
 # DDF=""
 # while read -r line; do
 #   DDF+="Storage............: ${W}${line}${R}"
