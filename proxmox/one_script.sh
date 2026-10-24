@@ -92,7 +92,7 @@ linux_motd() {
 
     rm -f /etc/update-motd.d/* # remove all motd
     # ln -s ~/github/dotfiles/proxmox/01-custom /etc/update-motd.d/01-custom
-    cat << EOF > /etc/update-motd.d/01-custom
+    cat << 'EOF' > /etc/update-motd.d/01-custom
 #!/bin/bash
 
 # blank screen =====================
