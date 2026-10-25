@@ -21,7 +21,7 @@ linux_install () {
     # for pkg in "$@"; do
     #     apt install -y $pkg
     # done
-    apt-get install -y -q=2 $@ 2>&1
+    apt-get install -y -q=2 $@ > /dev/null
 }
 
 # printing a colored status line
