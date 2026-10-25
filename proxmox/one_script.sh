@@ -121,7 +121,8 @@ END
 # debian - MOTD
 linux_motd() {
     status $GREEN " - setup motd"
-    apt install -y lsb-release figlet avahi-daemon
+    # apt install -y lsb-release figlet avahi-daemon
+    linux_install lsb-release figlet avahi-daemon
     rm -f /etc/motd            # remove existing one
     touch /etc/motd            # create empty file
     chmod 644 /etc/motd        # set permissions
@@ -209,7 +210,8 @@ EOF
 # SMB --------------------------------
 linux_smb() {
     status $GREEN " - samba install and setup"
-    apt install samba samba-common samba-common-bin cifs-utils python3-pexpect -y
+    # apt install samba samba-common samba-common-bin cifs-utils python3-pexpect -y
+    linux_install samba samba-common samba-common-bin cifs-utils python3-pexpect
 
     grep -Fxq "[homes]" /etc/samba/smb.conf
     ret_code=$?
@@ -325,7 +327,8 @@ linux_get_python() {
     fi
 
     status $GREEN " - python"
-    apt install -y python3-venv
+    # apt install -y python3-venv
+    linux_install python3-venv
     mkdir -p ${HOME}/venvs
     cd ${HOME}/venvs
     python3 -m venv ${HOME}/venvs/py
