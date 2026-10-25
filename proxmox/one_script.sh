@@ -431,6 +431,7 @@ linux_ssh
 # linux_get_devtools
 linux_get_python
 linux_smb
+linux_autoupdate
 print_done
 
 apt-get autoremove -q=2
