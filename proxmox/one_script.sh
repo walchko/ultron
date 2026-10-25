@@ -47,10 +47,10 @@ append () {
     grep -Fxq "$line" $file
     ret_code=$? # capture return code
     if [ "$ret_code" == "0" ]; then
-        status $CYAN "ALREADY Done: ${line} >> ${file}"
+        status $CYAN " * ALREADY Done: ${line} >> ${file}"
     else
         echo "${line}" | tee -a $file > /dev/null
-        status $GREEN "UPDATED ${file} with ${line}"
+        status $GREEN " - UPDATED ${file} with ${line}"
     fi
 }
 
@@ -120,6 +120,11 @@ END
 
 # debian - MOTD
 linux_motd() {
+    if [ ! -f "/etc/update-motd.d/01-custom" ]; then
+        status $CYAN "ALREADY installed motd"
+        return
+    fi
+
     status $GREEN " - setup motd"
     # apt install -y lsb-release figlet avahi-daemon
     linux_install lsb-release figlet avahi-daemon
@@ -209,7 +214,6 @@ EOF
 
 # SMB --------------------------------
 linux_smb() {
-    status $GREEN " - samba install and setup"
     # apt install samba samba-common samba-common-bin cifs-utils python3-pexpect -y
     linux_install samba samba-common samba-common-bin cifs-utils python3-pexpect
 
@@ -219,6 +223,9 @@ linux_smb() {
         status $CYAN " * smb.conf already setup for /mnt/nfs"
         return
     fi
+
+    status $GREEN " - samba install and setup"
+    
     mv /etc/samba/smb.conf /etc/samba/smb.conf.bak
 
     cat << EOF > /etc/samba/smb.conf
@@ -288,12 +295,13 @@ set_dot_files() {
     append 'alias systemctl-running="systemctl list-units --type=service --state=running"' ${HOME}/.bashrc
     append 'alias df="df -Th"' ${HOME}/.bashrc
     append '. ${HOME}/venvs/py/bin/activate' ${HOME}/.bashrc
-    status $YELLOW "==> Updated ${HOME}/.bashrc"
+    # status $YELLOW "==> Updated ${HOME}/.bashrc"
 }
 
 linux_get_basics() {
     status $GREEN " - update / upgrade / autoremove"
-    apt update && apt upgrade -y && apt autoremove
+    apt update -q=2
+    apt upgrade -y -q=2
 
     # status $GREEN " - locales"
     # apt install -y locales
@@ -321,7 +329,7 @@ linux_get_devtools() {
 
 # setup python and create virtual environment
 linux_get_python() {
-    if [[ -d ${HOME}/venvs ]]; then
+    if [[ -d ${HOME}/venvs/py ]]; then
         status $CYAN " * Python already setup"
         return
     fi
@@ -374,3 +382,5 @@ linux_ssh
 linux_get_python
 linux_smb
 print_done
+
+apt-get autoremove -q=2
