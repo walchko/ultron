@@ -2,6 +2,7 @@
 
 ![GitHub](https://img.shields.io/github/license/walchko/ultron)
 
+This repo is some of my work with ansible, docker, and bash scripts to setup virtual machines.
 
 # License MIT
 

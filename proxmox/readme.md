@@ -6,6 +6,9 @@ Basic setup script for Proxmox LXC Debian container:
 - `wget -q -O - https://raw.githubusercontent.com/walchko/ultron/refs/heads/master/proxmox/one_script.sh | bash`
 - `wget -q -O - https://github.com/walchko/ultron/blob/master/proxmox/one_script.sh?raw=true | bash`
 
+`one_script.sh` does the basica setup, I might create some more for specific 
+configurations of Proxmox LXCs or VMs. I just want a quick way to setup a 
+basic throw away environment to do some work.
 
 # License MIT
 
