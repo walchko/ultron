@@ -15,11 +15,11 @@ SAVE_PWD=""
 DOTFILESDIR=~/github/dotfiles
 HOSTNAME=`uname -n`
 
-apt_install () {
+linux_install () {
     # for pkg in "$@"; do
     #     apt install -y $pkg
     # done
-    apt-get install -y --show-progress $@ -q 2>&1
+    apt-get install -y -q=2 $@ 2>&1
 }
 
 # printing a colored status line
@@ -265,7 +265,7 @@ set_dot_files() {
     echo " - setup dot files"
     # Install packages
     # original PS1=${debian_chroot:+($debian_chroot)}\u@\h:\w\$
-    if [ `id -u` == "0" ]]; then
+    if [[ `id -u` == "0" ]]; then
         # red theme
         CB="\033[1;91m"
         C="\033[0;31m"
@@ -306,23 +306,25 @@ linux_get_basics() {
     timedatectl set-timezone America/New_York
 
     status $GREEN " - curl"
-    apt install -y curl
+    # apt install -y curl
+    linux_install curl
 }
 
 # get C dev tools
 linux_get_devtools() {
     status $GREEN " - install clang / git / tree / htop / cmake"
-    apt install -y git htop tree clang clang-format cmake
+    # apt install -y git htop tree clang clang-format cmake
+    linux_install git htop tree clang clang-format cmake
 }
 
 # setup python and create virtual environment
 linux_get_python() {
-    status $GREEN " - python"
     if [[ -d ${HOME}/venvs ]]; then
         status $CYAN " * Python already setup"
         return
     fi
 
+    status $GREEN " - python"
     apt install -y python3-venv
     mkdir -p ${HOME}/venvs
     cd ${HOME}/venvs
