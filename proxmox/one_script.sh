@@ -15,11 +15,18 @@ SAVE_PWD=""
 DOTFILESDIR=~/github/dotfiles
 HOSTNAME=`uname -n`
 
+apt_install () {
+    # for pkg in "$@"; do
+    #     apt install -y $pkg
+    # done
+    apt-get install -y --show-progress $@ -q 2>&1
+}
+
 # printing a colored status line
 # status <color> <message>
 status () {
     if [ $# -ne 2 ]; then
-        echo -e "${RED}*** ERROR: status <color> <message> ***${RESET}"
+        status $RED "*** ERROR: status <color> <message> ***"
         exit 1
     fi
     echo -e "$1$2 ${RESET_ALL}"
@@ -30,7 +37,7 @@ status () {
 # file.
 append () {
     if [ $# -ne 2 ]; then
-        echo -e "${RED}*** ERROR: append <line> <file> ***${RESET}"
+        status $RED "*** ERROR: append <line> <file> ***"
         exit 1
     fi
 
@@ -70,6 +77,36 @@ print_done () {
     status $GREEN "*   SUCCESS   *"
     status $GREEN "*             *"
     status $GREEN "***************"
+}
+
+linux_add_user() {
+    if [ $# -ne 2 ]; then
+        status $RED "*** ERROR: add_user username password ***"
+        exit 1
+    fi
+    USR=$1
+    PASS=$2
+    useradd $USR -s /bin/bash -M -U
+    chpasswd << 'END'
+$USR:$PASS
+END
+    unset USR
+    unset PASS
+}
+
+linux_add_smbuser() {
+    if [ $# -ne 2 ]; then
+        status $RED "*** ERROR: add_smbuser username password ***"
+        exit 1
+    fi
+    USR=$1
+    PASS=$2
+    smbpasswd -s -a $USR << 'END'
+$PASS
+$PASS
+END
+    unset USR
+    unset PASS
 }
 
 # push_dir() {
@@ -174,12 +211,13 @@ linux_smb() {
     status $GREEN " - samba install and setup"
     apt install samba samba-common samba-common-bin cifs-utils python3-pexpect -y
 
-    # grep -Fxq "[homes]" /etc/samba/smb.conf
-    # ret_code=$?
-    # if [ "$ret_code" == "0" ]; then
-    #     status $CYAN "smb.conf already setup for /mnt/nfs"
-    # else
-    #     mv /etc/samba/smb.conf /etc/samba/smb.conf.bak
+    grep -Fxq "[homes]" /etc/samba/smb.conf
+    ret_code=$?
+    if [ "$ret_code" == "0" ]; then
+        status $CYAN " * smb.conf already setup for /mnt/nfs"
+        return
+    fi
+    mv /etc/samba/smb.conf /etc/samba/smb.conf.bak
 
     cat << EOF > /etc/samba/smb.conf
 [global]
@@ -188,28 +226,6 @@ linux_smb() {
     dns proxy = no
     security = user
 
-# #### Debugging/Accounting ####
-#     log file = /var/log/samba/log.%m
-#     max log size = 1000
-#     syslog = 0
-#     panic action = /usr/share/samba/panic-action %d
-
-# ####### Authentication #######
-#     server role = standalone server
-#     passdb backend = tdbsam
-#     obey pam restrictions = yes
-#     unix password sync = yes
-#     passwd program = /usr/bin/passwd %u
-#     passwd chat = *Enter\snew\s*\spassword:* %n\n *Retype\snew\s*\spassword:* %n\n *password\supdated\ssuccessfully* .
-#     pam password change = yes
-#     map to guest = bad user
-
-# ############ Misc ############
-# # Allow users who've been granted usershare privileges to create
-# # public shares, not just authenticated ones
-#     usershare allow guests = yes
-
-#======================= Share Definitions =======================
 [homes]
     comment = Home Directory
     read only = no
@@ -249,7 +265,6 @@ set_dot_files() {
     echo " - setup dot files"
     # Install packages
     # original PS1=${debian_chroot:+($debian_chroot)}\u@\h:\w\$
-    # PKGS="avahi-daemon tree"
     if [ `id -u` == "0" ]]; then
         # red theme
         CB="\033[1;91m"
@@ -265,7 +280,7 @@ set_dot_files() {
     fi
     append "export PS1='${debian_chroot:+($debian_chroot)}${CB}\u@\h:${C}\w\$ \033[0m'" ${HOME}/.bashrc
     append 'export EDITOR=nano' ${HOME}/.bashrc
-    append 'export LANG=en_US.UTF-8' ${HOME}/.bashrc
+    # append 'export LANG=en_US.UTF-8' ${HOME}/.bashrc
     append 'alias ls="ls --color -h"' ${HOME}/.bashrc
     append 'alias systemctl="systemctl --no-pager"' ${HOME}/.bashrc
     append 'alias systemctl-running="systemctl list-units --type=service --state=running"' ${HOME}/.bashrc
@@ -278,11 +293,14 @@ linux_get_basics() {
     status $GREEN " - update / upgrade / autoremove"
     apt update && apt upgrade -y && apt autoremove
 
-    status $GREEN " - locales"
-    apt install -y locales
-    locale-gen en_US en_US.UTF-8
-    update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
-    export LANG=en_US.UTF-8
+    # status $GREEN " - locales"
+    # apt install -y locales
+    # locale-gen en_US en_US.UTF-8
+    # update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+    # export LANG=en_US.UTF-8
+
+    # fix locals ... try this
+    # apt-get install locales-all
 
     status $GREEN " - timezone"
     timedatectl set-timezone America/New_York
@@ -326,26 +344,20 @@ linux_get_python() {
 # esac
 
 cat << "EOF"
-$YELLOW
  ____       _     _               _    __  ______   ____       _               
 |  _ \  ___| |__ (_) __ _ _ __   | |   \ \/ / ___| / ___|  ___| |_ _   _ _ __  
 | | | |/ _ \ '_ \| |/ _` | '_ \  | |    \  / |     \___ \ / _ \ __| | | | '_ \ 
 | |_| |  __/ |_) | | (_| | | | | | |___ /  \ |___   ___) |  __/ |_| |_| | |_) |
 |____/ \___|_.__/|_|\__,_|_| |_| |_____/_/\_\____| |____/ \___|\__|\__,_| .__/ 
                                                                         |_|    
-$RESET
 EOF
 
 fail_not_linux
 fail_not_root
 
+echo -e "$YELLOW"
 uname -a
-
-
-# if [[ "${os}" == "macos" ]]; then
-#     status $RED "Not linux, is ${os}"
-#     exit 1
-# fi
+echo -e "$RESET"
 
 status $GREEN "Tasks:"
 linux_get_basics
