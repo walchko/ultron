@@ -330,15 +330,20 @@ set_dot_files() {
     status $GREEN " - setup dot files"
     # Install packages
     # original PS1=${debian_chroot:+($debian_chroot)}\u@\h:\w\$
+    RESET_COLOR='\[\033[0m\]'
     if [[ `id -u` == "0" ]]; then
         # red theme
         # RED="$ESC[31m"
-        CB="\033[1;91m"
-        C="\033[0;31m"
+        # CB="\033[1;91m"
+        # C="\033[0;31m"
+        HOST_COLOR='\[\033[1;91m\]'
+        USER_COLOR='\[\033[0;31m\]'
     else
         # blue theme
-        CB="\033[1;94m"
-        C="\033[0;34m"
+        # CB="\033[1;94m"
+        # C="\033[0;34m"
+        HOST_COLOR='\[\033[1;94m\]'
+        USER_COLOR='\[\033[0;34m\]'
     fi
     # append "export PS1='${debian_chroot:+($debian_chroot)}${CB}\u@\h:${C}\w\$ \033[0m'" ${HOME}/.bashrc
     # append 'export EDITOR=nano' ${HOME}/.bashrc
@@ -361,7 +366,8 @@ set_dot_files() {
 # umask 022
 
 # export PS1='\033[1;91m\u@\h:\033[0;31m\w$ \033[0m'
-export PS1='${debian_chroot:+($debian_chroot)}${CB}\u@\h:${C}\w\$ \033[0m'
+# export PS1='${debian_chroot:+($debian_chroot)}${CB}\u@\h:${C}\w\$ \033[0m'
+export PS1='${HOST_COLOR}\h:${USER_COLOR}\w\$ ${RESET_COLOR}'
 export EDITOR=nano
 export LANG=en_US.UTF-8
 alias ls="ls --color -h"
