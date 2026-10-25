@@ -264,17 +264,23 @@ EOF
 
 # SMB --------------------------------
 linux_smb() {
-    # apt install samba samba-common samba-common-bin cifs-utils python3-pexpect -y
-    linux_install samba samba-common samba-common-bin cifs-utils python3-pexpect
+    if [[ ! -d "/etc/samba" ]]; then
+        linux_install samba samba-common samba-common-bin cifs-utils python3-pexpect
+        status $YELLOW "   ////////////////////////////////"
+        status $YELLOW "   // run: smbpasswd -a username //"
+        status $YELLOW "   ////////////////////////////////"
+    else
+        status $CYAN " * Samba already installed"
+    fi
 
     grep -Fxq "[homes]" /etc/samba/smb.conf
     ret_code=$?
     if [ "$ret_code" == "0" ]; then
-        status $CYAN " * smb.conf already setup for /mnt/nfs"
+        status $CYAN " * smb.conf already setup for homes"
         return
     fi
 
-    status $GREEN " - samba install and setup"
+    status $GREEN " - samba setup /etc/samba/smb.conf for homes"
     
     mv /etc/samba/smb.conf /etc/samba/smb.conf.bak
 
@@ -328,14 +334,10 @@ set_dot_files() {
         # red theme
         CB="\033[1;91m"
         C="\033[0;31m"
-
-        # apt install $PKGS -y
     else
         # blue theme
         CB="\033[1;94m"
         C="\033[0;34m"
-
-        # sudo apt install $PKGS -y
     fi
     append "export PS1='${debian_chroot:+($debian_chroot)}${CB}\u@\h:${C}\w\$ \033[0m'" ${HOME}/.bashrc
     append 'export EDITOR=nano' ${HOME}/.bashrc
@@ -350,8 +352,8 @@ set_dot_files() {
 
 linux_get_basics() {
     status $GREEN " - update / upgrade / autoremove"
-    apt update -q=2
-    apt upgrade -y -q=2
+    apt-get update -q=2
+    apt-get upgrade -y -q=2
 
     # status $GREEN " - locales"
     # apt install -y locales
@@ -366,14 +368,12 @@ linux_get_basics() {
     timedatectl set-timezone America/New_York
 
     status $GREEN " - curl"
-    # apt install -y curl
     linux_install curl
 }
 
 # get C dev tools
 linux_get_devtools() {
     status $GREEN " - install clang / git / tree / htop / cmake"
-    # apt install -y git htop tree clang clang-format cmake
     linux_install git htop tree clang clang-format cmake
 }
 
@@ -385,7 +385,6 @@ linux_get_python() {
     fi
 
     status $GREEN " - python"
-    # apt install -y python3-venv
     linux_install python3-venv
     mkdir -p ${HOME}/venvs
     cd ${HOME}/venvs
