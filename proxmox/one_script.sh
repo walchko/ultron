@@ -332,6 +332,7 @@ set_dot_files() {
     # original PS1=${debian_chroot:+($debian_chroot)}\u@\h:\w\$
     if [[ `id -u` == "0" ]]; then
         # red theme
+        # RED="$ESC[31m"
         CB="\033[1;91m"
         C="\033[0;31m"
     else
@@ -339,15 +340,36 @@ set_dot_files() {
         CB="\033[1;94m"
         C="\033[0;34m"
     fi
-    append "export PS1='${debian_chroot:+($debian_chroot)}${CB}\u@\h:${C}\w\$ \033[0m'" ${HOME}/.bashrc
-    append 'export EDITOR=nano' ${HOME}/.bashrc
-    # append 'export LANG=en_US.UTF-8' ${HOME}/.bashrc
-    append 'alias ls="ls --color -h"' ${HOME}/.bashrc
-    append 'alias systemctl="systemctl --no-pager"' ${HOME}/.bashrc
-    append 'alias systemctl-running="systemctl list-units --type=service --state=running"' ${HOME}/.bashrc
-    append 'alias df="df -Th"' ${HOME}/.bashrc
-    append '. ${HOME}/venvs/py/bin/activate' ${HOME}/.bashrc
+    # append "export PS1='${debian_chroot:+($debian_chroot)}${CB}\u@\h:${C}\w\$ \033[0m'" ${HOME}/.bashrc
+    # append 'export EDITOR=nano' ${HOME}/.bashrc
+    # # append 'export LANG=en_US.UTF-8' ${HOME}/.bashrc
+    # append 'alias ls="ls --color -h"' ${HOME}/.bashrc
+    # append 'alias systemctl="systemctl --no-pager"' ${HOME}/.bashrc
+    # append 'alias systemctl-running="systemctl list-units --type=service --state=running"' ${HOME}/.bashrc
+    # append 'alias df="df -Th"' ${HOME}/.bashrc
+    # append '. ${HOME}/venvs/py/bin/activate' ${HOME}/.bashrc
     # status $YELLOW "==> Updated ${HOME}/.bashrc"
+
+    mv $HOME/.bashrc $HOME/.bashrc.old
+    cat << EOF > $HOME/.bashrc
+# ~/.bashrc: executed by bash(1) for non-login shells.
+
+# Note: PS1 is set in /etc/profile, and the default umask is defined
+# in /etc/login.defs. You should not need this unless you want different
+# defaults for root.
+# PS1='${debian_chroot:+($debian_chroot)}\h:\w\$ '
+# umask 022
+
+# export PS1='\033[1;91m\u@\h:\033[0;31m\w$ \033[0m'
+export PS1='${debian_chroot:+($debian_chroot)}${CB}\u@\h:${C}\w\$ \033[0m'
+export EDITOR=nano
+export LANG=en_US.UTF-8
+alias ls="ls --color -h"
+alias systemctl="systemctl --no-pager"
+alias systemctl-running="systemctl list-units --type=service --state=running"
+alias df="df -Th"
+. ${HOME}/venvs/py/bin/activate
+EOF
 }
 
 linux_get_basics() {
