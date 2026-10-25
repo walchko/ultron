@@ -47,10 +47,10 @@ append () {
     grep -Fxq "$line" $file
     ret_code=$? # capture return code
     if [ "$ret_code" == "0" ]; then
-        status $CYAN " * ALREADY Done: ${line} >> ${file}"
+        status $CYAN "   * ALREADY Done: ${line} >> ${file}"
     else
         echo "${line}" | tee -a $file > /dev/null
-        status $GREEN " - UPDATED ${file} with ${line}"
+        status $GREEN "   - UPDATED ${file} with ${line}"
     fi
 }
 
@@ -120,7 +120,7 @@ END
 
 # debian - MOTD
 linux_motd() {
-    if [ ! -f "/etc/update-motd.d/01-custom" ]; then
+    if [ -f "/etc/update-motd.d/01-custom" ]; then
         status $CYAN "ALREADY installed motd"
         return
     fi
@@ -271,7 +271,7 @@ EOF
 
 # Set command line
 set_dot_files() {
-    echo " - setup dot files"
+    status $GREEN " - setup dot files"
     # Install packages
     # original PS1=${debian_chroot:+($debian_chroot)}\u@\h:\w\$
     if [[ `id -u` == "0" ]]; then
