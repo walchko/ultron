@@ -171,50 +171,57 @@ EOF
 
 # SMB --------------------------------
 linux_smb() {
-    status $YELLOW "Samba Install"
+    status $GREEN " - samba install and setup"
     apt install samba samba-common samba-common-bin cifs-utils python3-pexpect -y
 
-    grep -Fxq "[nfs]" /etc/samba/smb.conf
-    ret_code=$?
-    if [ "$ret_code" == "0" ]; then
-        status $CYAN "smb.conf already setup for /mnt/nfs"
-    else
-        mv /etc/samba/smb.conf /etc/samba/smb.conf.bak
+    # grep -Fxq "[share]" /etc/samba/smb.conf
+    # ret_code=$?
+    # if [ "$ret_code" == "0" ]; then
+    #     status $CYAN "smb.conf already setup for /mnt/nfs"
+    # else
+    #     mv /etc/samba/smb.conf /etc/samba/smb.conf.bak
 
-        cat << EOF > /etc/samba/smb.conf
+    cat << EOF > /etc/samba/smb.conf
 [global]
-   workgroup = WORKGROUP
-   wins support = yes
-   dns proxy = no
+    workgroup = WORKGROUP
+    wins support = yes
+    dns proxy = no
+    security = user
 
-#### Debugging/Accounting ####
-   log file = /var/log/samba/log.%m
-   max log size = 1000
-   syslog = 0
-   panic action = /usr/share/samba/panic-action %d
+# #### Debugging/Accounting ####
+#     log file = /var/log/samba/log.%m
+#     max log size = 1000
+#     syslog = 0
+#     panic action = /usr/share/samba/panic-action %d
 
-####### Authentication #######
-   server role = standalone server
-   passdb backend = tdbsam
-   obey pam restrictions = yes
-   unix password sync = yes
-   passwd program = /usr/bin/passwd %u
-   passwd chat = *Enter\snew\s*\spassword:* %n\n *Retype\snew\s*\spassword:* %n\n *password\supdated\ssuccessfully* .
-   pam password change = yes
-   map to guest = bad user
+# ####### Authentication #######
+#     server role = standalone server
+#     passdb backend = tdbsam
+#     obey pam restrictions = yes
+#     unix password sync = yes
+#     passwd program = /usr/bin/passwd %u
+#     passwd chat = *Enter\snew\s*\spassword:* %n\n *Retype\snew\s*\spassword:* %n\n *password\supdated\ssuccessfully* .
+#     pam password change = yes
+#     map to guest = bad user
 
-############ Misc ############
-# Allow users who've been granted usershare privileges to create
-# public shares, not just authenticated ones
-   usershare allow guests = yes
+# ############ Misc ############
+# # Allow users who've been granted usershare privileges to create
+# # public shares, not just authenticated ones
+#     usershare allow guests = yes
 
 #======================= Share Definitions =======================
-[${HOSTNAME}]
-   read only = no
-   path = /${USER}
-   guest ok = yes
+[homes]
+    comment = Home Directory
+    read only = no
+    browsable = no
+    create mask = 0664
+    directory mask = 0775
+    writable = yes
+    guest ok = no
+    valid users = %S
+    veto files = /._*/.DS_Store/
+    delete veto files = yes
 EOF
-fi
 
     service smbd restart
     service nmbd restart
@@ -263,6 +270,7 @@ set_dot_files() {
     append 'alias systemctl="systemctl --no-pager"' ${HOME}/.bashrc
     append 'alias systemctl-running="systemctl list-units --type=service --state=running"' ${HOME}/.bashrc
     append 'alias df="df -Th"' ${HOME}/.bashrc
+    append '. ${HOME}/venvs/py/bin/activate' ${HOME}/.bashrc
     status $YELLOW "==> Updated ${HOME}/.bashrc"
 }
 
@@ -345,4 +353,5 @@ linux_motd
 linux_ssh
 # linux_get_devtools
 linux_get_python
+# linux_smb
 print_done
