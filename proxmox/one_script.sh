@@ -174,7 +174,7 @@ linux_smb() {
     status $GREEN " - samba install and setup"
     apt install samba samba-common samba-common-bin cifs-utils python3-pexpect -y
 
-    # grep -Fxq "[share]" /etc/samba/smb.conf
+    # grep -Fxq "[homes]" /etc/samba/smb.conf
     # ret_code=$?
     # if [ "$ret_code" == "0" ]; then
     #     status $CYAN "smb.conf already setup for /mnt/nfs"
@@ -301,7 +301,7 @@ linux_get_devtools() {
 linux_get_python() {
     status $GREEN " - python"
     if [[ -d ${HOME}/venvs ]]; then
-        status $CYAN "Python already setup"
+        status $CYAN " * Python already setup"
         return
     fi
 
@@ -326,12 +326,14 @@ linux_get_python() {
 # esac
 
 cat << "EOF"
+$YELLOW
  ____       _     _               _    __  ______   ____       _               
 |  _ \  ___| |__ (_) __ _ _ __   | |   \ \/ / ___| / ___|  ___| |_ _   _ _ __  
 | | | |/ _ \ '_ \| |/ _` | '_ \  | |    \  / |     \___ \ / _ \ __| | | | '_ \ 
 | |_| |  __/ |_) | | (_| | | | | | |___ /  \ |___   ___) |  __/ |_| |_| | |_) |
 |____/ \___|_.__/|_|\__,_|_| |_| |_____/_/\_\____| |____/ \___|\__|\__,_| .__/ 
                                                                         |_|    
+$RESET
 EOF
 
 fail_not_linux
