@@ -353,5 +353,5 @@ linux_motd
 linux_ssh
 # linux_get_devtools
 linux_get_python
-# linux_smb
+linux_smb
 print_done
