@@ -397,6 +397,16 @@ linux_get_basics() {
 linux_get_devtools() {
     status $GREEN " - install clang / git / cmake"
     linux_install git clang clang-format cmake
+
+    cat << EOF > $HOME/.gitconfig
+[user]
+	name = walchko
+	email = walchko@users.noreply.github.com
+[user "user"]
+	email = walchko@users.noreply.github.com
+[core]
+	editor = nano
+EOF
 }
 
 # setup python and create virtual environment
