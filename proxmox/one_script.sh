@@ -156,7 +156,7 @@ EOF
 
     systemctl daemon-reload
     systemctl enable --now weekly-update.timer
-    systemctl list-timers --all
+    # systemctl list-timers --all
 }
 
 # push_dir() {
