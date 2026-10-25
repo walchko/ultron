@@ -367,14 +367,14 @@ linux_get_basics() {
     status $GREEN " - timezone"
     timedatectl set-timezone America/New_York
 
-    status $GREEN " - curl"
-    linux_install curl
+    status $GREEN " - curl / tree / htop"
+    linux_install curl htop tree
 }
 
 # get C dev tools
 linux_get_devtools() {
-    status $GREEN " - install clang / git / tree / htop / cmake"
-    linux_install git htop tree clang clang-format cmake
+    status $GREEN " - install clang / git / cmake"
+    linux_install git clang clang-format cmake
 }
 
 # setup python and create virtual environment
