@@ -15,6 +15,8 @@ SAVE_PWD=""
 DOTFILESDIR=~/github/dotfiles
 HOSTNAME=`uname -n`
 
+export DEBIAN_FRONTEND=noninteractive
+
 linux_install () {
     # for pkg in "$@"; do
     #     apt install -y $pkg
@@ -109,6 +111,54 @@ END
     unset PASS
 }
 
+linux_autoupdate() {
+    if [ -f "/usr/local/bin/weekly-update.sh" ]; then
+        status $CYAN " * ALREADY installed systemd auto update"
+        return
+    fi
+
+    status $GREEN " - install systemd auto update"
+
+    cat << EOF > /usr/local/bin/weekly-update.sh
+#!/bin/bash
+export DEBIAN_FRONTEND=noninteractive
+apt-get update && apt-get upgrade -y
+apt-get autoremove -y
+apt-get clean
+EOF
+    chmod +x /usr/local/bin/weekly-update.sh
+
+    cat << EOF > /etc/systemd/system/weekly-update.service
+[Unit]
+Description=Weekly System Update Service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/weekly-update.sh
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+    cat << EOF > /etc/systemd/system/weekly-update.timer
+[Unit]
+Description=Run Weekly System Update Service
+
+[Timer]
+OnCalendar=Sun *-*-* 03:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+EOF
+
+    systemctl daemon-reload
+    systemctl enable --now weekly-update.timer
+    systemctl list-timers --all
+}
+
 # push_dir() {
 #     SAVE_PWD=`pwd`
 # }
@@ -121,7 +171,7 @@ END
 # debian - MOTD
 linux_motd() {
     if [ -f "/etc/update-motd.d/01-custom" ]; then
-        status $CYAN "ALREADY installed motd"
+        status $CYAN " * ALREADY installed motd"
         return
     fi
 
